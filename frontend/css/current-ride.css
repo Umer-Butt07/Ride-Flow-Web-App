@@ -1,0 +1,509 @@
+/* ============================================
+   RideFlow — Current Ride Page Styles
+   (Extends driver-dashboard.css for layout)
+   ============================================ */
+
+/* ---------- Ride Panel ---------- */
+.ride-panel {
+  flex: 0 0 42%;
+  max-width: 460px;
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  overflow-y: auto;
+}
+
+.ride-panel-heading {
+  font-size: 1.65rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.ride-panel-sub {
+  font-size: 0.85rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-text-muted);
+  margin-top: -8px;
+}
+
+/* ---------- Active Status Card ---------- */
+.active-status-card {
+  background: var(--clr-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  box-shadow: 0 6px 24px rgba(26,26,46,0.25);
+}
+
+.status-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-card-label {
+  font-size: 0.66rem;
+  font-weight: var(--fw-bold);
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-card-title {
+  font-size: 1.05rem;
+  font-weight: var(--fw-extrabold);
+  color: #fff;
+}
+
+.status-card-eta {
+  font-size: 0.82rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-accent);
+}
+
+.status-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2.5px solid var(--clr-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(22,163,74,0); }
+}
+
+.status-card-icon svg {
+  width: 22px;
+  height: 22px;
+  color: var(--clr-accent);
+}
+
+/* ---------- Passenger Card ---------- */
+.cr-passenger-card {
+  background: var(--clr-card);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  transition: box-shadow var(--transition-fast);
+}
+
+.cr-passenger-card:hover { box-shadow: var(--shadow-md); }
+
+.cr-passenger-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-border);
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  flex-shrink: 0;
+}
+
+.cr-passenger-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cr-passenger-name {
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+.cr-passenger-rating {
+  font-size: 0.76rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cr-passenger-rating svg {
+  width: 12px;
+  height: 12px;
+  fill: #f59e0b;
+  color: #f59e0b;
+}
+
+.cr-action-btns {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.cr-action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--clr-accent-light);
+  border: 1px solid var(--clr-accent-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--clr-accent);
+  transition: background var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.cr-action-btn:hover {
+  background: #bbf7d0;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgba(22,163,74,0.15);
+}
+
+.cr-action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cr-action-btn:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Trip Details Card ---------- */
+.trip-details-card {
+  background: var(--clr-input-bg);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Locations */
+.cr-locations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+  padding-left: var(--space-xl);
+}
+
+.cr-locations::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  background: #d1d5db;
+  border-style: dashed;
+}
+
+.cr-loc-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  padding: var(--space-xs) 0;
+}
+
+.cr-loc-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-xl) + 3px);
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2.5px solid var(--clr-text-muted);
+  background: var(--clr-card);
+  z-index: 2;
+}
+
+.cr-loc-item.dropoff .cr-loc-dot {
+  background: var(--clr-text-muted);
+}
+
+.cr-loc-label {
+  font-size: 0.66rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cr-loc-address {
+  font-size: 0.9rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+/* Trip Stats Row */
+.cr-stats-row {
+  display: flex;
+  gap: var(--space-lg);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--clr-border);
+}
+
+.cr-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.cr-stat svg {
+  width: 18px;
+  height: 18px;
+  color: var(--clr-text-muted);
+  flex-shrink: 0;
+}
+
+.cr-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cr-stat-label {
+  font-size: 0.66rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cr-stat-value {
+  font-size: 0.92rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+}
+
+/* ---------- Estimated Fare Card ---------- */
+.fare-card {
+  background: linear-gradient(135deg, #14532d 0%, #166534 50%, #15803d 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(22,101,52,0.25);
+}
+
+.fare-card-label {
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.fare-card-amount {
+  font-size: 1.5rem;
+  font-weight: var(--fw-extrabold);
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+/* ---------- Action Buttons ---------- */
+.cr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.btn-end-trip {
+  width: 100%;
+  padding: 16px 28px;
+  font-family: var(--ff-primary);
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold);
+  color: #fff;
+  background: var(--clr-primary);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: background var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-end-trip:hover {
+  background: var(--clr-primary-hover);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.btn-end-trip:active { transform: translateY(0) scale(0.99); }
+
+.btn-end-trip:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 3px;
+}
+
+.btn-end-trip .spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+}
+
+.btn-end-trip.loading .spinner { display: inline-block; margin-left: 8px; }
+.btn-end-trip.loading .btn-text { opacity: 0.7; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn-cancel-ride {
+  width: 100%;
+  padding: 14px 28px;
+  font-family: var(--ff-primary);
+  font-size: 0.85rem;
+  font-weight: var(--fw-semibold);
+  color: var(--clr-text-muted);
+  background: #f3f4f6;
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-align: center;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.btn-cancel-ride:hover {
+  background: #e5e7eb;
+  color: var(--clr-text);
+  transform: translateY(-1px);
+}
+
+.btn-cancel-ride:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 3px;
+}
+
+/* Ripple */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+/* ---------- Map Markers ---------- */
+.cr-map-marker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 10;
+}
+
+.cr-map-marker.dropoff-mk { top: 28%; right: 30%; }
+
+.cr-marker-label {
+  padding: 5px 14px;
+  background: var(--clr-primary);
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+}
+
+.cr-marker-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--clr-primary);
+  border: 3px solid var(--clr-card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Driver arrow icon */
+.cr-driver-marker {
+  position: absolute;
+  bottom: 38%;
+  left: 38%;
+  width: 38px;
+  height: 38px;
+  background: var(--clr-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(26,26,46,0.3);
+  z-index: 10;
+  animation: driverPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes driverPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(26,26,46,0.3); }
+  50%      { box-shadow: 0 4px 12px rgba(26,26,46,0.3), 0 0 0 10px rgba(26,26,46,0.08); }
+}
+
+.cr-driver-marker svg {
+  width: 18px;
+  height: 18px;
+  transform: rotate(-45deg);
+}
+
+/* ============================================
+   RESPONSIVE OVERRIDES
+   ============================================ */
+@media (max-width: 860px) {
+  .ride-panel {
+    flex: none;
+    max-width: 100%;
+    padding: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 520px) {
+  .ride-panel {
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .ride-panel-heading { font-size: 1.35rem; }
+
+  .active-status-card { padding: var(--space-lg); }
+
+  .status-card-title { font-size: 0.95rem; }
+
+  .cr-stats-row { flex-direction: column; gap: var(--space-md); }
+
+  .fare-card-amount { font-size: 1.25rem; }
+
+  .btn-end-trip { padding: 14px 24px; font-size: 0.88rem; }
+}

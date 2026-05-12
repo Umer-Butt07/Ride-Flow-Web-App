@@ -1,0 +1,329 @@
+/* ============================================
+   RideFlow — Ride History Page Styles
+   (Extends rider-dashboard.css for layout)
+   ============================================ */
+
+/* ---------- History Panel ---------- */
+.history-panel {
+  flex: 0 0 42%;
+  max-width: 460px;
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  overflow-y: auto;
+}
+
+.history-heading {
+  font-size: 1.65rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+/* ---------- Filter Tabs ---------- */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 8px 20px;
+  font-family: var(--ff-primary);
+  font-size: 0.8rem;
+  font-weight: var(--fw-semibold);
+  color: var(--clr-text-muted);
+  background: #f3f4f6;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.filter-tab:hover {
+  background: #e5e7eb;
+  color: var(--clr-text);
+  transform: translateY(-1px);
+}
+
+.filter-tab.active {
+  background: var(--clr-primary);
+  color: #fff;
+  border-color: var(--clr-primary);
+  box-shadow: 0 2px 8px rgba(26, 26, 46, 0.2);
+}
+
+.filter-tab:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Ride Cards List ---------- */
+.ride-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ---------- Single Ride Card ---------- */
+.ride-card {
+  background: var(--clr-card);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.ride-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Card header row */
+.ride-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ride-card-date {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ride-date-text {
+  font-size: 0.88rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+.ride-type-text {
+  font-size: 0.74rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-text-muted);
+}
+
+/* Status badges */
+.ride-status {
+  padding: 4px 12px;
+  font-size: 0.66rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ride-status.completed {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.ride-status.cancelled {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+/* Locations */
+.ride-locations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.ride-location-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.82rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-text);
+}
+
+.ride-location-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--clr-text-muted);
+  opacity: 0.7;
+}
+
+.ride-location-item.dropoff svg {
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+/* Footer row */
+.ride-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--clr-border);
+}
+
+.ride-stats-row {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.ride-stat-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ride-stat-mini-label {
+  font-size: 0.68rem;
+  font-weight: var(--fw-semibold);
+  color: var(--clr-text-muted);
+}
+
+.ride-stat-mini-value {
+  font-size: 0.88rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+/* View Details link */
+.view-details-link {
+  font-size: 0.82rem;
+  font-weight: var(--fw-semibold);
+  color: var(--clr-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  position: relative;
+  padding: 2px 0;
+}
+
+.view-details-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--clr-primary);
+  transition: width var(--transition-base);
+}
+
+.view-details-link:hover {
+  color: var(--clr-text);
+}
+
+.view-details-link:hover::after {
+  width: 100%;
+}
+
+.view-details-link:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------- Empty State ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  color: var(--clr-text-light);
+  text-align: center;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.4;
+}
+
+.empty-state-text {
+  font-size: 0.9rem;
+  font-weight: var(--fw-medium);
+}
+
+/* ---------- Card Animation ---------- */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ride-card {
+  animation: cardFadeIn 0.4s ease both;
+}
+
+.ride-card:nth-child(1) { animation-delay: 0.05s; }
+.ride-card:nth-child(2) { animation-delay: 0.1s; }
+.ride-card:nth-child(3) { animation-delay: 0.15s; }
+.ride-card:nth-child(4) { animation-delay: 0.2s; }
+.ride-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* ============================================
+   RESPONSIVE OVERRIDES
+   ============================================ */
+@media (max-width: 860px) {
+  .history-panel {
+    flex: none;
+    max-width: 100%;
+    padding: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 520px) {
+  .history-panel {
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .history-heading {
+    font-size: 1.35rem;
+  }
+
+  .filter-tab {
+    padding: 7px 16px;
+    font-size: 0.75rem;
+  }
+
+  .ride-card {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .ride-stats-row {
+    gap: var(--space-md);
+  }
+
+  .ride-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .view-details-link {
+    align-self: flex-end;
+  }
+}

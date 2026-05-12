@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow — View your complete ride history." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow — Ride History</title>
+
+  <!-- Google Fonts — Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Base Dashboard Layout -->
+  <link rel="stylesheet" href="../../css/rider-dashboard.css" />
+  <!-- Page-Specific Styles -->
+  <link rel="stylesheet" href="../../css/ride-history.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       TOP NAVBAR
+       ============================================ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="rider-dashboard.html" class="navbar-logo" aria-label="RideFlow Dashboard">
+      RideFlow<span class="logo-dot" aria-hidden="true"></span>
+    </a>
+
+    <ul class="navbar-tabs" role="tablist">
+      <li><a class="navbar-tab" data-tab="book-ride" role="tab" aria-selected="false" href="rider-dashboard.html">Book Ride</a></li>
+      <li><a class="navbar-tab active" data-tab="my-trips" role="tab" aria-selected="true" href="ride-history.html">My Trips</a></li>
+      <li><a class="navbar-tab" data-tab="payments" role="tab" aria-selected="false" href="payment-summary.html">Payments</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <span class="navbar-user-name">John Doe</span>
+        <div class="navbar-avatar" aria-label="User avatar">JD</div>
+      </div>
+      <a href="ride-history.html" class="navbar-link active" id="rideHistoryLink">Ride History</a>
+      <a href="../auth/login.html" class="navbar-link" id="logoutLink">Logout</a>
+      <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Open sidebar menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       LEFT SIDEBAR
+       ============================================ -->
+  <aside class="sidebar" id="sidebar" role="complementary" aria-label="Sidebar navigation">
+    <div class="sidebar-user">
+      <div class="sidebar-user-name">John Doe</div>
+      <div class="sidebar-user-role">Premium Member</div>
+    </div>
+
+    <ul class="sidebar-nav" role="menu">
+      <li>
+        <a class="sidebar-nav-item" data-section="book-ride" role="menuitem" href="rider-dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17l-1 2h2m14-2l1 2h-2"/>
+            <circle cx="7.5" cy="14" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/>
+          </svg>
+          Book Ride
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item active" data-section="my-trips" role="menuitem" href="ride-history.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          My Trips
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="payments" role="menuitem" href="payment-summary.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Payments
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="settings" role="menuitem" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Sidebar mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <main class="main-content" role="main">
+    <div class="booking-card">
+
+      <!-- ── Left — History Panel ── -->
+      <div class="history-panel">
+
+        <!-- Heading -->
+        <h1 class="history-heading">Ride History</h1>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" role="tablist" aria-label="Filter rides">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true" tabindex="0">All Rides</button>
+          <button class="filter-tab" data-filter="completed" role="tab" aria-selected="false" tabindex="0">Completed</button>
+          <button class="filter-tab" data-filter="cancelled" role="tab" aria-selected="false" tabindex="0">Cancelled</button>
+        </div>
+
+        <!-- Ride Cards -->
+        <div class="ride-cards" id="rideCards">
+
+          <!-- Ride 1 — Completed -->
+          <div class="ride-card" data-status="completed">
+            <div class="ride-card-header">
+              <div class="ride-card-date">
+                <span class="ride-date-text">Oct 22, 14:30</span>
+                <span class="ride-type-text">Economy Ride</span>
+              </div>
+              <span class="ride-status completed">Completed</span>
+            </div>
+            <div class="ride-locations">
+              <div class="ride-location-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+                </svg>
+                123 Market St, San Francisco
+              </div>
+              <div class="ride-location-item dropoff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                Fisherman's Wharf, SF
+              </div>
+            </div>
+            <div class="ride-card-footer">
+              <div class="ride-stats-row">
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Fare</span>
+                  <span class="ride-stat-mini-value">Rs. 24.00</span>
+                </div>
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Distance</span>
+                  <span class="ride-stat-mini-value">8.5 km</span>
+                </div>
+              </div>
+              <a href="#" class="view-details-link">View Details</a>
+            </div>
+          </div>
+
+          <!-- Ride 2 — Cancelled -->
+          <div class="ride-card" data-status="cancelled">
+            <div class="ride-card-header">
+              <div class="ride-card-date">
+                <span class="ride-date-text">Oct 20, 09:15</span>
+                <span class="ride-type-text">Premium Ride</span>
+              </div>
+              <span class="ride-status cancelled">Cancelled</span>
+            </div>
+            <div class="ride-locations">
+              <div class="ride-location-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+                </svg>
+                SFO International Airport
+              </div>
+              <div class="ride-location-item dropoff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                Downtown SF Marriott
+              </div>
+            </div>
+            <div class="ride-card-footer">
+              <div class="ride-stats-row">
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Fare</span>
+                  <span class="ride-stat-mini-value">Rs. 0.00</span>
+                </div>
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Duration</span>
+                  <span class="ride-stat-mini-value">0 mins</span>
+                </div>
+              </div>
+              <a href="#" class="view-details-link">View Details</a>
+            </div>
+          </div>
+
+          <!-- Ride 3 — Completed -->
+          <div class="ride-card" data-status="completed">
+            <div class="ride-card-header">
+              <div class="ride-card-date">
+                <span class="ride-date-text">Oct 18, 18:45</span>
+                <span class="ride-type-text">Bike Ride</span>
+              </div>
+              <span class="ride-status completed">Completed</span>
+            </div>
+            <div class="ride-locations">
+              <div class="ride-location-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+                </svg>
+                Mission District
+              </div>
+              <div class="ride-location-item dropoff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                Dolores Park
+              </div>
+            </div>
+            <div class="ride-card-footer">
+              <div class="ride-stats-row">
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Fare</span>
+                  <span class="ride-stat-mini-value">Rs. 8.50</span>
+                </div>
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Distance</span>
+                  <span class="ride-stat-mini-value">3.2 km</span>
+                </div>
+              </div>
+              <a href="#" class="view-details-link">View Details</a>
+            </div>
+          </div>
+
+          <!-- Ride 4 — Completed -->
+          <div class="ride-card" data-status="completed">
+            <div class="ride-card-header">
+              <div class="ride-card-date">
+                <span class="ride-date-text">Oct 15, 08:00</span>
+                <span class="ride-type-text">SUV Ride</span>
+              </div>
+              <span class="ride-status completed">Completed</span>
+            </div>
+            <div class="ride-locations">
+              <div class="ride-location-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+                </svg>
+                Union Square
+              </div>
+              <div class="ride-location-item dropoff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                Golden Gate Bridge
+              </div>
+            </div>
+            <div class="ride-card-footer">
+              <div class="ride-stats-row">
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Fare</span>
+                  <span class="ride-stat-mini-value">Rs. 38.00</span>
+                </div>
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Distance</span>
+                  <span class="ride-stat-mini-value">12.1 km</span>
+                </div>
+              </div>
+              <a href="#" class="view-details-link">View Details</a>
+            </div>
+          </div>
+
+          <!-- Ride 5 — Cancelled -->
+          <div class="ride-card" data-status="cancelled">
+            <div class="ride-card-header">
+              <div class="ride-card-date">
+                <span class="ride-date-text">Oct 12, 22:10</span>
+                <span class="ride-type-text">Economy Ride</span>
+              </div>
+              <span class="ride-status cancelled">Cancelled</span>
+            </div>
+            <div class="ride-locations">
+              <div class="ride-location-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+                </svg>
+                Pier 39
+              </div>
+              <div class="ride-location-item dropoff">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                Nob Hill
+              </div>
+            </div>
+            <div class="ride-card-footer">
+              <div class="ride-stats-row">
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Fare</span>
+                  <span class="ride-stat-mini-value">Rs. 0.00</span>
+                </div>
+                <div class="ride-stat-mini">
+                  <span class="ride-stat-mini-label">Duration</span>
+                  <span class="ride-stat-mini-value">0 mins</span>
+                </div>
+              </div>
+              <a href="#" class="view-details-link">View Details</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span class="empty-state-text">No rides found for this filter.</span>
+        </div>
+      </div>
+
+      <!-- ── Right — Map / Trip Visualization ── -->
+      <div class="map-panel" id="mapPanel" aria-label="Trip route map">
+        <img
+          class="map-image"
+          src="../../assets/dashboard-map.png"
+          alt="Map showing ride routes in San Francisco"
+          draggable="false"
+        />
+
+        <!-- Route line -->
+        <svg class="route-line" aria-hidden="true">
+          <line x1="34%" y1="28%" x2="82%" y2="65%" />
+        </svg>
+
+        <!-- Pickup marker -->
+        <div class="map-marker map-marker-pickup">
+          <div class="marker-pin marker-pin-pickup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <span class="marker-label">Pickup Point</span>
+        </div>
+
+        <!-- Destination marker -->
+        <div class="map-marker map-marker-destination">
+          <div class="marker-pin marker-pin-destination">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <span class="marker-label">Destination</span>
+        </div>
+
+        <!-- Map Controls -->
+        <div class="map-controls">
+          <button class="map-control-btn" id="zoomInBtn" aria-label="Zoom in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn" id="zoomOutBtn" aria-label="Zoom out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn btn-location" id="locationBtn" aria-label="My location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../../js/ride-history.js"></script>
+</body>
+</html>

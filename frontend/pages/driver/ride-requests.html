@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow Driver â€” Incoming ride request." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow â€” New Ride Request</title>
+
+  <!-- Google Fonts â€” Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Base Driver Dashboard -->
+  <link rel="stylesheet" href="../../css/driver-dashboard.css" />
+  <!-- Page-Specific Styles -->
+  <link rel="stylesheet" href="../../css/ride-requests.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       TOP NAVBAR
+       ============================================ -->
+  <nav class="driver-navbar" role="navigation" aria-label="Driver navigation">
+    <a href="driver-dashboard.html" class="driver-navbar-logo" aria-label="RideFlow Driver Dashboard">
+      RideFlow<span class="logo-online-dot" id="logoDot" aria-hidden="true"></span>
+    </a>
+
+    <div class="driver-navbar-right">
+      <span class="earnings-pill" id="earningsPill" aria-label="Today's earnings">Rs. 425.50</span>
+
+      <div class="driver-profile">
+        <div class="driver-profile-avatar" aria-label="Driver avatar">AD</div>
+        <span class="driver-profile-name">Alex Driver</span>
+      </div>
+
+      <a href="../auth/login.html" class="navbar-logout" id="logoutLink">Logout</a>
+
+      <button class="driver-hamburger" id="hamburgerBtn" aria-label="Open sidebar menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       LEFT SIDEBAR
+       ============================================ -->
+  <aside class="driver-sidebar" id="sidebar" role="complementary" aria-label="Driver sidebar">
+    <div class="sidebar-driver-info">
+      <div class="sidebar-avatar" aria-label="Driver avatar">AD</div>
+      <span class="sidebar-driver-name">Alex Driver</span>
+      <span class="sidebar-driver-meta">
+        4.98 Rating <span class="meta-dot" aria-hidden="true"></span> Online
+      </span>
+    </div>
+
+    <ul class="sidebar-menu" role="menu">
+      <li>
+        <a class="sidebar-menu-item" data-section="dashboard" role="menuitem" href="driver-dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-menu-item active" data-section="ride-requests" role="menuitem" href="ride-requests.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17l-1 2h2m14-2l1 2h-2"/>
+            <circle cx="7.5" cy="14" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/>
+          </svg>
+          Ride Requests
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-menu-item" data-section="earnings" role="menuitem" href="earnings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          Earnings
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-menu-item" data-section="ride-history" role="menuitem" href="driver-ride-history.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Ride History
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-menu-item" data-section="settings" role="menuitem" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+
+    <button class="btn-go-offline" id="goOfflineBtn">Go Offline</button>
+  </aside>
+
+  <!-- Sidebar mobile overlay -->
+  <div class="driver-sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <main class="driver-main" role="main">
+    <div class="driver-dashboard-card">
+
+      <!-- â”€â”€ Left â€” Request Panel â”€â”€ -->
+      <div class="request-panel">
+
+        <!-- Heading -->
+        <h1 class="request-heading">New Ride Request</h1>
+        <p class="request-subheading">Incoming request nearby â€¢ Ready for pickup</p>
+
+        <!-- Passenger Card -->
+        <div class="passenger-card" id="passengerCard">
+
+          <!-- Passenger Header -->
+          <div class="passenger-header">
+            <div class="passenger-avatar" aria-label="Passenger avatar">JD</div>
+            <div class="passenger-info">
+              <span class="passenger-name">John Doe</span>
+              <span class="passenger-meta">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.8 â€¢ 124 Rides
+              </span>
+            </div>
+            <span class="ride-type-badge">Economy</span>
+          </div>
+
+          <!-- Location Details -->
+          <div class="location-section">
+            <!-- Pickup -->
+            <div class="location-item">
+              <span class="location-dot"></span>
+              <span class="location-label">Pickup</span>
+              <span class="location-address">123 Main St, Central District</span>
+            </div>
+
+            <!-- Diamond connector -->
+            <span class="location-connector" aria-hidden="true"></span>
+
+            <!-- Drop-off -->
+            <div class="location-item dropoff">
+              <span class="location-dot"></span>
+              <span class="location-label">Drop-off</span>
+              <span class="location-address">456 Oak Ave, North Point</span>
+            </div>
+          </div>
+
+          <!-- Request Stats -->
+          <div class="request-stats">
+            <div class="request-stat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div class="request-stat-text">
+                <span class="request-stat-label">Distance</span>
+                <span class="request-stat-value">2.3 km away</span>
+              </div>
+            </div>
+            <div class="request-stat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <div class="request-stat-text">
+                <span class="request-stat-label">Arrival</span>
+                <span class="request-stat-value">5 mins</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estimated Fare -->
+          <div class="est-fare-row">
+            <span class="est-fare-label">Est. Fare</span>
+            <span class="est-fare-value">Rs. 18.50</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="request-actions">
+          <button type="button" class="btn-accept" id="acceptBtn">
+            <span class="btn-text">Accept Ride</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn-decline" id="declineBtn">
+            <span class="btn-text">Decline</span>
+            <span class="countdown-badge" id="countdownBadge">15s</span>
+          </button>
+        </div>
+
+        <!-- Passenger Verification -->
+        <div class="verification-card">
+          <svg class="verification-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span class="verification-text">This passenger is a "Frequent Flyer" with verified payment.</span>
+        </div>
+
+      </div>
+
+      <!-- â”€â”€ Right â€” Live Map Panel â”€â”€ -->
+      <div class="driver-map-panel" id="mapPanel" aria-label="Ride request map">
+        <img
+          class="map-image"
+          src="../../assets/dashboard-map.png"
+          alt="Map showing pickup and drop-off locations"
+          draggable="false"
+        />
+
+        <!-- Traffic Badge -->
+        <div class="traffic-badge">
+          <span class="traffic-dot"></span>
+          <span class="traffic-text">Searching for traffic updatesâ€¦</span>
+        </div>
+
+        <!-- Pickup Marker -->
+        <div class="map-marker-req pickup-marker">
+          <span class="marker-label-req">Pickup</span>
+          <span class="marker-dot-req"></span>
+        </div>
+
+        <!-- Drop-off Marker -->
+        <div class="map-marker-req dropoff-marker">
+          <span class="marker-label-req">Drop-off</span>
+          <span class="marker-dot-req"></span>
+        </div>
+
+        <!-- Map Controls -->
+        <div class="driver-map-controls">
+          <button class="map-ctrl-btn btn-loc" id="locationBtn" aria-label="My location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-ctrl-btn" id="zoomInBtn" aria-label="Zoom in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-ctrl-btn" id="zoomOutBtn" aria-label="Zoom out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-ctrl-btn btn-layers" id="layersBtn" aria-label="Map layers">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../../js/ride-requests.js"></script>
+</body>
+</html>

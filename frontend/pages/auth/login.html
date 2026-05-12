@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow — Seamless rides, smarter journeys. Log in to book your next ride." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow — Login</title>
+
+  <!-- Google Fonts — Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../../css/login.css" />
+</head>
+
+<body>
+
+  <!-- ===== Authentication Container ===== -->
+  <main class="auth-container" id="authContainer" role="main">
+
+    <!-- ── Left Panel: Login Form ── -->
+    <section class="auth-form-panel" aria-label="Login form">
+
+      <!-- Branding -->
+      <div class="brand-logo" aria-label="RideFlow logo">
+        RideFlow<span class="logo-dot" aria-hidden="true"></span>
+      </div>
+
+      <!-- Welcome Text -->
+      <h1 class="welcome-heading">Welcome back!</h1>
+      <p class="welcome-subtext">Seamless rides, smarter journeys</p>
+
+      <!-- Login Form -->
+      <form class="login-form" id="loginForm" novalidate autocomplete="on">
+
+        <!-- Username -->
+        <div class="input-group has-left-icon">
+          <input type="text" id="username" name="username" placeholder="Username" autocomplete="username" required
+            aria-label="Username" aria-describedby="usernameError" />
+          <!-- User icon -->
+          <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="error-message" id="usernameError" role="alert"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="input-group has-left-icon">
+          <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password"
+            required aria-label="Password" aria-describedby="passwordError" />
+          <!-- Lock icon -->
+          <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <!-- Toggle Visibility -->
+          <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password" tabindex="0">
+            <!-- Eye icon (show) -->
+            <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <!-- Eye-off icon (hide) -->
+            <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
+          </button>
+          <span class="error-message" id="passwordError" role="alert"></span>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-password-wrapper">
+          <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn-login" id="loginBtn">
+          <span class="btn-text">LOGIN</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <!-- Register -->
+      <p class="register-text">
+        Not a member? <a href="register.html" class="register-link" id="registerLink">Register now</a>
+      </p>
+    </section>
+
+    <!-- ── Right Panel: Image ── -->
+    <aside class="auth-image-panel" aria-label="Decorative travel illustration">
+        <img src="../../assets/rideflow-map.png" alt="Illustrated map showing a car traveling along a winding road with GPS markers" class="vector-img" loading="eager"
+        draggable="false" />
+      <!-- Overlay gradient -->
+      <div class="image-overlay" aria-hidden="true"></div>
+      <!-- Carousel dots -->
+      <div class="carousel-dots" aria-hidden="true">
+        <button class="carousel-dot active" data-index="0"></button>
+        <button class="carousel-dot" data-index="1"></button>
+        <button class="carousel-dot" data-index="2"></button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script src="../../js/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow — Finding a driver for your ride." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow — Finding Driver</title>
+
+  <!-- Google Fonts — Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Base Dashboard Layout -->
+  <link rel="stylesheet" href="../../css/rider-dashboard.css" />
+  <!-- Page-Specific Styles -->
+  <link rel="stylesheet" href="../../css/finding-driver.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       TOP NAVBAR
+       ============================================ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+
+    <!-- Left — Logo -->
+    <a href="rider-dashboard.html" class="navbar-logo" aria-label="RideFlow Dashboard">
+      RideFlow<span class="logo-dot" aria-hidden="true"></span>
+    </a>
+
+    <!-- Center — Tabs -->
+    <ul class="navbar-tabs" role="tablist">
+      <li><a class="navbar-tab active" data-tab="book-ride" role="tab" aria-selected="true" href="rider-dashboard.html">Book Ride</a></li>
+      <li><a class="navbar-tab" data-tab="my-trips" role="tab" aria-selected="false" href="ride-history.html">My Trips</a></li>
+      <li><a class="navbar-tab" data-tab="payments" role="tab" aria-selected="false" href="payment-summary.html">Payments</a></li>
+    </ul>
+
+    <!-- Right — User -->
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <span class="navbar-user-name">John Doe</span>
+        <div class="navbar-avatar" aria-label="User avatar">JD</div>
+      </div>
+      <a href="ride-history.html" class="navbar-link" id="rideHistoryLink">Ride History</a>
+      <a href="../auth/login.html" class="navbar-link" id="logoutLink">Logout</a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Open sidebar menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       LEFT SIDEBAR
+       ============================================ -->
+  <aside class="sidebar" id="sidebar" role="complementary" aria-label="Sidebar navigation">
+
+    <!-- User Info -->
+    <div class="sidebar-user">
+      <div class="sidebar-user-name">John Doe</div>
+      <div class="sidebar-user-role">Premium Member</div>
+    </div>
+
+    <!-- Navigation -->
+    <ul class="sidebar-nav" role="menu">
+      <li>
+        <a class="sidebar-nav-item active" data-section="book-ride" role="menuitem" href="rider-dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17l-1 2h2m14-2l1 2h-2"/>
+            <circle cx="7.5" cy="14" r="1.5"/>
+            <circle cx="16.5" cy="14" r="1.5"/>
+          </svg>
+          Book Ride
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="my-trips" role="menuitem" href="ride-history.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          My Trips
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="payments" role="menuitem" href="payment-summary.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Payments
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="settings" role="menuitem" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Sidebar mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <main class="main-content" role="main">
+
+    <!-- Booking/Search Card -->
+    <div class="booking-card" id="searchCard" style="position: relative;">
+
+      <!-- ── Left — Searching Panel ── -->
+      <div class="searching-panel">
+
+        <!-- Heading with dots -->
+        <div class="searching-header">
+          <h1 class="searching-heading">Finding a<br/>Driver...</h1>
+          <div class="loading-dots" aria-label="Searching" role="status">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="searching-description">
+          <h2>Searching for nearby drivers</h2>
+          <p>Please wait while we connect you to the closest driver</p>
+        </div>
+
+        <!-- Ride Summary Card -->
+        <div class="ride-summary-card">
+
+          <!-- Pickup -->
+          <div class="summary-location">
+            <svg class="summary-location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/>
+            </svg>
+            <div class="summary-location-content">
+              <span class="summary-location-label">Pickup Location</span>
+              <span class="summary-location-value">San Francisco</span>
+            </div>
+          </div>
+
+          <!-- Drop-off -->
+          <div class="summary-location">
+            <svg class="summary-location-icon destination-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="summary-location-content">
+              <span class="summary-location-label">Drop-off Location</span>
+              <span class="summary-location-value">Bernal Heights Park</span>
+            </div>
+          </div>
+
+          <hr class="summary-separator" />
+
+          <!-- Details grid -->
+          <div class="summary-details">
+            <div>
+              <div class="summary-detail-label">Vehicle Type</div>
+              <div class="summary-detail-value">Economy</div>
+            </div>
+            <div>
+              <div class="summary-detail-label">Estimated Fare</div>
+              <div class="summary-detail-value">Rs. 24.00</div>
+            </div>
+            <div>
+              <div class="summary-detail-label">Distance</div>
+              <div class="summary-detail-value">8.5 km</div>
+            </div>
+            <div>
+              <div class="summary-detail-label">Duration</div>
+              <div class="summary-detail-value">15 mins</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Status -->
+        <div class="availability-status" id="availabilityStatus">
+          <div class="availability-spinner">
+            <!-- Rotating refresh icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/>
+              <polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+          </div>
+          <span class="availability-text">Checking availability...</span>
+        </div>
+
+        <!-- Cancel Ride Button -->
+        <button type="button" class="btn-cancel" id="cancelBtn">
+          Cancel Ride
+        </button>
+      </div>
+
+      <!-- ── Right — Map ── -->
+      <div class="map-panel" id="mapPanel" aria-label="Route map">
+
+        <!-- Map image -->
+        <img
+          class="map-image"
+          src="../../assets/dashboard-map.png"
+          alt="Map of San Francisco showing the route from pickup to destination"
+          draggable="false"
+        />
+
+        <!-- Route line -->
+        <svg class="route-line" aria-hidden="true">
+          <line x1="34%" y1="30%" x2="82%" y2="68%" />
+        </svg>
+
+        <!-- Pickup marker -->
+        <div class="map-marker map-marker-pickup">
+          <div class="marker-pin marker-pin-pickup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <span class="marker-label">Pickup Point</span>
+        </div>
+
+        <!-- Destination marker -->
+        <div class="map-marker map-marker-destination">
+          <div class="marker-pin marker-pin-destination">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <span class="marker-label">Destination</span>
+        </div>
+
+        <!-- Map Controls -->
+        <div class="map-controls">
+          <button class="map-control-btn" id="zoomInBtn" aria-label="Zoom in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn" id="zoomOutBtn" aria-label="Zoom out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn btn-location" id="locationBtn" aria-label="My location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="6"/>
+              <line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="6" y2="12"/>
+              <line x1="18" y1="12" x2="22" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+
+
+    </div>
+  </main>
+
+  <!-- JavaScript -->
+  <script src="../../js/finding-driver.js"></script>
+</body>
+</html>

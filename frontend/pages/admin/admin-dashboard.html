@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow Admin Dashboard - Manage users, drivers, vehicles, and system reports." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow - Admin Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../css/admin-dashboard.css" />
+</head>
+<body>
+
+  <!-- ── Sidebar Overlay (mobile) ── -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       SIDEBAR
+       ============================================ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-logo">RideFlow</span>
+      <span class="brand-dot"></span>
+      <span class="brand-badge">ADMIN</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Main</div>
+      <a class="sidebar-link active" data-section="overview" href="#">
+        <span class="link-icon">OV</span> Overview
+      </a>
+      <a class="sidebar-link" data-section="users" href="#">
+        <span class="link-icon">US</span> Users
+      </a>
+      <a class="sidebar-link" data-section="drivers" href="#">
+        <span class="link-icon">DR</span> Drivers
+      </a>
+      <a class="sidebar-link" data-section="vehicles" href="#">
+        <span class="link-icon">VE</span> Vehicles
+      </a>
+
+      <div class="nav-section-title">Operations</div>
+      <a class="sidebar-link" data-section="complaints" href="#">
+        <span class="link-icon">CO</span> Complaints
+      </a>
+      <a class="sidebar-link" data-section="promos" href="#">
+        <span class="link-icon">PR</span> Promo Codes
+      </a>
+
+      <div class="nav-section-title">Analytics</div>
+      <a class="sidebar-link" data-section="reports" href="#">
+        <span class="link-icon">RP</span> Reports
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="adminAvatar">SA</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="adminName">Super Admin</div>
+          <div class="sidebar-user-role">Administrator</div>
+        </div>
+      </div>
+      <a class="logout-link" id="logoutLink" href="#">
+        <span>LO</span> Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <div class="main-content">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle sidebar">Menu</button>
+        <h1>Dashboard</h1>
+        <p>Welcome back, <span id="adminGreeting">Admin</span></p>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="location.reload()">Refresh</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: OVERVIEW
+         ════════════════════════════════════════════ -->
+    <div class="section active-section" id="sec-overview">
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card users">
+          <div class="stat-icon">US</div>
+          <div class="stat-value" id="statTotalUsers">-</div>
+          <div class="stat-label">Total Users</div>
+          <div class="stat-sub"><span id="statRiders">0</span> Riders / <span id="statDrivers">0</span> Drivers</div>
+        </div>
+        <div class="stat-card rides">
+          <div class="stat-icon">RD</div>
+          <div class="stat-value" id="statTotalRides">-</div>
+          <div class="stat-label">Total Rides</div>
+          <div class="stat-sub"><span id="statCompleted">0</span> Completed / <span id="statCancelled">0</span> Cancelled</div>
+        </div>
+        <div class="stat-card revenue">
+          <div class="stat-icon">Rs.</div>
+          <div class="stat-value" id="statRevenue">-</div>
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-sub">From completed payments</div>
+        </div>
+        <div class="stat-card active">
+          <div class="stat-icon">AR</div>
+          <div class="stat-value" id="statActiveRides">-</div>
+          <div class="stat-label">Active Rides</div>
+          <div class="stat-sub">Currently in progress</div>
+        </div>
+      </div>
+
+      <!-- Recent Users Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Recent Users</span>
+          <span class="panel-badge" id="recentUsersBadge">0 users</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th>
+            </tr>
+          </thead>
+          <tbody id="recentUsersBody">
+            <tr><td colspan="5" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: USERS
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-users">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">All Users</span>
+          <span class="panel-badge" id="allUsersBadge">-</span>
+        </div>
+        <div class="panel-tabs">
+          <button class="panel-tab active" data-role="all">All</button>
+          <button class="panel-tab" data-role="Rider">Riders</button>
+          <button class="panel-tab" data-role="Driver">Drivers</button>
+          <button class="panel-tab" data-role="Admin">Admins</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Status</th><th>Wallet</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr><td colspan="8" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: DRIVERS
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-drivers">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Driver Management</span>
+          <span class="panel-badge" id="driversBadge">-</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>License</th><th>CNIC</th><th>Verification</th><th>Rating</th><th>Trips</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="driversTableBody">
+            <tr><td colspan="8" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: VEHICLES
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-vehicles">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Registered Vehicles</span>
+          <span class="panel-badge" id="vehiclesBadge">-</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Type</th><th>Make &amp; Model</th><th>Year</th><th>Color</th><th>Plate</th><th>Driver</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="vehiclesTableBody">
+            <tr><td colspan="8" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: COMPLAINTS
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-complaints">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Complaints</span>
+          <span class="panel-badge" id="complaintsBadge">-</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Filed By</th><th>Against</th><th>Description</th><th>Status</th><th>Date</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="complaintsTableBody">
+            <tr><td colspan="7" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: PROMOS
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-promos">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Promo Codes</span>
+          <span class="panel-badge" id="promosBadge">-</span>
+        </div>
+        <div class="promo-form" id="promoForm">
+          <input class="promo-input" id="promoCode" placeholder="Code" required />
+          <input class="promo-input" id="promoDiscount" placeholder="Discount %" type="number" required />
+          <input class="promo-input" id="promoExpiry" type="date" required />
+          <input class="promo-input" id="promoLimit" placeholder="Usage Limit" type="number" />
+          <button class="promo-submit" id="promoSubmitBtn">+ Add Promo</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Code</th><th>Discount</th><th>Expiry</th><th>Usage</th><th>Active</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="promosTableBody">
+            <tr><td colspan="7" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION: REPORTS
+         ════════════════════════════════════════════ -->
+    <div class="section" id="sec-reports">
+
+      <!-- Revenue by City -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Revenue by City</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>City</th><th>Total Rides</th><th>Total Revenue</th><th>Avg Fare</th><th>Platform Commission</th>
+            </tr>
+          </thead>
+          <tbody id="revenueByCityBody">
+            <tr><td colspan="5" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Revenue by Payment Method -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Revenue by Payment Method</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Method</th><th>Transactions</th><th>Total Revenue</th><th>Avg Amount</th>
+            </tr>
+          </thead>
+          <tbody id="revenueByPaymentBody">
+            <tr><td colspan="4" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Driver Earnings -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Driver Earnings &amp; Commissions</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Driver</th><th>Email</th><th>Rides</th><th>Total Fare</th><th>Commission</th><th>Net Earned</th><th>Wallet</th>
+            </tr>
+          </thead>
+          <tbody id="driverEarningsBody">
+            <tr><td colspan="7" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Top Drivers Leaderboard -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Driver Leaderboard</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rank</th><th>Driver</th><th>Rating</th><th>Trips</th><th>Vehicle</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <tr><td colspan="6" class="empty-state"><div class="empty-state-icon">...</div><div class="empty-state-text">Loading...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div><!-- /main-content -->
+
+  <script src="../../js/admin-dashboard.js"></script>
+</body>
+</html>

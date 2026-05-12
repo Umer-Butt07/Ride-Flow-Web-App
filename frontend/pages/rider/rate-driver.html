@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow — Rate your driver and share feedback." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow — Rate Your Driver</title>
+
+  <!-- Google Fonts — Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Base Dashboard Layout -->
+  <link rel="stylesheet" href="../../css/rider-dashboard.css" />
+  <!-- Page-Specific Styles -->
+  <link rel="stylesheet" href="../../css/rate-driver.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       TOP NAVBAR
+       ============================================ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="rider-dashboard.html" class="navbar-logo" aria-label="RideFlow Dashboard">
+      RideFlow<span class="logo-dot" aria-hidden="true"></span>
+    </a>
+
+    <ul class="navbar-tabs" role="tablist">
+      <li><a class="navbar-tab" data-tab="book-ride" role="tab" aria-selected="false" href="rider-dashboard.html">Book Ride</a></li>
+      <li><a class="navbar-tab active" data-tab="my-trips" role="tab" aria-selected="true" href="ride-history.html">My Trips</a></li>
+      <li><a class="navbar-tab" data-tab="payments" role="tab" aria-selected="false" href="payment-summary.html">Payments</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <span class="navbar-user-name">John Doe</span>
+        <div class="navbar-avatar" aria-label="User avatar">JD</div>
+      </div>
+      <a href="ride-history.html" class="navbar-link" id="rideHistoryLink">Ride History</a>
+      <a href="../auth/login.html" class="navbar-link" id="logoutLink">Logout</a>
+      <button class="navbar-hamburger" id="hamburgerBtn" aria-label="Open sidebar menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       LEFT SIDEBAR
+       ============================================ -->
+  <aside class="sidebar" id="sidebar" role="complementary" aria-label="Sidebar navigation">
+    <div class="sidebar-user">
+      <div class="sidebar-user-name">John Doe</div>
+      <div class="sidebar-user-role">Premium Member</div>
+    </div>
+
+    <ul class="sidebar-nav" role="menu">
+      <li>
+        <a class="sidebar-nav-item" data-section="book-ride" role="menuitem" href="rider-dashboard.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17l-1 2h2m14-2l1 2h-2"/>
+            <circle cx="7.5" cy="14" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/>
+          </svg>
+          Book Ride
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item active" data-section="my-trips" role="menuitem" href="ride-history.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          My Trips
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="payments" role="menuitem" href="payment-summary.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Payments
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-nav-item" data-section="settings" role="menuitem" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Sidebar mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <main class="main-content" role="main">
+    <div class="booking-card" style="position: relative;">
+
+      <!-- ── Left — Rating Panel ── -->
+      <div class="rating-panel">
+
+        <!-- Heading -->
+        <h1 class="rating-heading">Rate Your Driver</h1>
+        <p class="rating-subheading">How was your ride experience?</p>
+
+        <!-- Driver Profile Card -->
+        <div class="driver-profile-card">
+          <div class="driver-avatar-rating" aria-label="Driver avatar">Alex</div>
+          <div class="driver-profile-info">
+            <span class="driver-profile-name">Alex Johnson</span>
+            <span class="driver-profile-vehicle">Toyota Prius • White • 7WAY432</span>
+          </div>
+          <div class="driver-rating-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.9
+          </div>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="star-rating-section" role="radiogroup" aria-label="Rate your ride">
+          <div class="star-rating" id="starRating">
+            <button class="star-btn" data-value="1" aria-label="1 star" tabindex="0">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+            <button class="star-btn" data-value="2" aria-label="2 stars" tabindex="0">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+            <button class="star-btn" data-value="3" aria-label="3 stars" tabindex="0">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+            <button class="star-btn" data-value="4" aria-label="4 stars" tabindex="0">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+            <button class="star-btn" data-value="5" aria-label="5 stars" tabindex="0">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </button>
+          </div>
+          <span class="star-helper" id="starHelper">Tap to rate your ride</span>
+        </div>
+
+        <!-- Feedback Textarea -->
+        <textarea
+          class="feedback-textarea"
+          id="feedbackText"
+          placeholder="Write additional feedback (optional)"
+          aria-label="Additional feedback"
+          rows="4"
+        ></textarea>
+
+        <!-- Quick Feedback Tags -->
+        <div class="feedback-tags-section">
+          <span class="feedback-tags-label">What went well?</span>
+          <div class="feedback-tags" id="feedbackTags" role="group" aria-label="Quick feedback options">
+            <button class="feedback-tag" data-tag="clean-ride" tabindex="0">Clean Ride</button>
+            <button class="feedback-tag" data-tag="friendly-driver" tabindex="0">Friendly Driver</button>
+            <button class="feedback-tag" data-tag="smooth-driving" tabindex="0">Smooth Driving</button>
+            <button class="feedback-tag" data-tag="late-arrival" tabindex="0">Late Arrival</button>
+            <button class="feedback-tag" data-tag="poor-navigation" tabindex="0">Poor Navigation</button>
+          </div>
+        </div>
+
+        <!-- Trip Summary Card -->
+        <div class="trip-summary-card">
+          <div class="trip-fare-row">
+            <span class="trip-fare-label">Total Fare</span>
+            <span class="trip-fare-amount">Rs. 24.00</span>
+          </div>
+
+          <!-- Pickup -->
+          <div class="trip-location">
+            <svg class="trip-location-icon pickup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="5"/>
+              <circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/>
+            </svg>
+            <div class="trip-location-content">
+              <span class="trip-location-type">Pickup</span>
+              <span class="trip-location-address">82nd Ave, Central Business Dist.</span>
+            </div>
+          </div>
+
+          <!-- Drop-off -->
+          <div class="trip-location">
+            <svg class="trip-location-icon dropoff-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="trip-location-content">
+              <span class="trip-location-type">Drop-off</span>
+              <span class="trip-location-address">Westline Residential Estate</span>
+            </div>
+          </div>
+
+          <!-- Meta -->
+          <div class="trip-meta">
+            <span>8.5 km distance</span>
+            <span class="trip-meta-dot" aria-hidden="true"></span>
+            <span>15 mins duration</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="rating-actions">
+          <button type="button" class="btn-submit-rating" id="submitRatingBtn">
+            <span class="btn-text">Submit Rating</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <a href="rider-dashboard.html" class="skip-link" id="skipLink">Skip</a>
+        </div>
+      </div>
+
+      <!-- ── Right — Map / Trip Visualization ── -->
+      <div class="map-panel" id="mapPanel" aria-label="Completed trip route map">
+        <img
+          class="map-image"
+          src="../../assets/dashboard-map.png"
+          alt="Map showing completed trip route"
+          draggable="false"
+        />
+
+        <!-- Route line -->
+        <svg class="route-line" aria-hidden="true">
+          <line x1="34%" y1="28%" x2="82%" y2="65%" />
+        </svg>
+
+        <!-- Pickup marker -->
+        <div class="map-marker map-marker-pickup">
+          <div class="marker-pin marker-pin-pickup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <span class="marker-label">Pickup Point</span>
+        </div>
+
+        <!-- Destination marker -->
+        <div class="map-marker map-marker-destination">
+          <div class="marker-pin marker-pin-destination">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <span class="marker-label">Destination</span>
+        </div>
+
+        <!-- Trip Completed Card -->
+        <div class="trip-completed-card">
+          <div class="trip-completed-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="trip-completed-text">
+            <span class="trip-completed-title">Trip Completed</span>
+            <span class="trip-completed-time">Successfully arrived at 2:45 PM</span>
+          </div>
+        </div>
+
+        <!-- Map Controls -->
+        <div class="map-controls">
+          <button class="map-control-btn btn-location" id="locationBtn" aria-label="My location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn" id="zoomInBtn" aria-label="Zoom in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="map-control-btn" id="zoomOutBtn" aria-label="Zoom out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Rating Success Overlay ── -->
+      <div class="rating-success-overlay" id="successOverlay" aria-live="polite">
+        <div class="success-check-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2 class="success-heading">Thank You!</h2>
+        <p class="success-message">Your feedback helps us improve the RideFlow experience for everyone.</p>
+        <div class="success-stars" id="successStars" aria-hidden="true"></div>
+        <button type="button" class="btn-back-home" id="backHomeBtn">Back to Dashboard</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../../js/rate-driver.js"></script>
+</body>
+</html>

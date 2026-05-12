@@ -1,0 +1,462 @@
+/* ============================================
+   RideFlow — Driver Ride History Page Styles
+   (Extends driver-dashboard.css for layout)
+   ============================================ */
+
+/* ---------- History Panel ---------- */
+.drh-panel {
+  flex: 0 0 42%;
+  max-width: 460px;
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  overflow-y: auto;
+}
+
+.drh-heading {
+  font-size: 1.65rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.drh-subheading {
+  font-size: 0.85rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-text-muted);
+  margin-top: -8px;
+}
+
+/* ---------- Filter Tabs ---------- */
+.drh-filters {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.drh-filter {
+  padding: 8px 20px;
+  font-family: var(--ff-primary);
+  font-size: 0.8rem;
+  font-weight: var(--fw-semibold);
+  color: var(--clr-text-muted);
+  background: #f3f4f6;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.drh-filter:hover {
+  background: #e5e7eb;
+  color: var(--clr-text);
+  transform: translateY(-1px);
+}
+
+.drh-filter.active {
+  background: var(--clr-primary);
+  color: #fff;
+  border-color: var(--clr-primary);
+  box-shadow: 0 2px 8px rgba(26,26,46,0.2);
+}
+
+.drh-filter:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Ride Cards ---------- */
+.drh-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Single ride card */
+.drh-card {
+  background: var(--clr-card);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+  cursor: pointer;
+  animation: drhFadeIn 0.4s ease both;
+}
+
+.drh-card:nth-child(1) { animation-delay: 0.05s; }
+.drh-card:nth-child(2) { animation-delay: 0.1s; }
+.drh-card:nth-child(3) { animation-delay: 0.15s; }
+.drh-card:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes drhFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.drh-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.drh-card.featured {
+  border-color: var(--clr-primary);
+  border-width: 2px;
+}
+
+/* Card header row */
+.drh-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.drh-card-date {
+  font-size: 0.88rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+.drh-card-amount {
+  font-size: 1.25rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+  letter-spacing: -0.3px;
+}
+
+/* Status badge */
+.drh-status {
+  font-size: 0.62rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.drh-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.drh-status.completed { color: var(--clr-accent); }
+.drh-status.completed .drh-status-dot { background: var(--clr-accent); }
+
+.drh-status.cancelled { color: var(--clr-danger); }
+.drh-status.cancelled .drh-status-dot { background: var(--clr-danger); }
+
+/* Locations */
+.drh-locations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-left: var(--space-xl);
+  position: relative;
+}
+
+.drh-locations::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: #d1d5db;
+}
+
+.drh-loc {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: relative;
+  padding: 2px 0;
+}
+
+.drh-loc-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-xl) + 3px);
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2.5px solid var(--clr-text-muted);
+  background: var(--clr-card);
+  z-index: 2;
+}
+
+.drh-loc.dropoff .drh-loc-dot { background: var(--clr-text-muted); }
+
+.drh-loc-label {
+  font-size: 0.62rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.drh-loc-address {
+  font-size: 0.88rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text);
+}
+
+/* Stats row */
+.drh-stats-row {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.drh-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.drh-stat-label {
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.drh-stat-value {
+  font-size: 0.85rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+}
+
+/* View Details button */
+.drh-view-btn {
+  margin-left: auto;
+  padding: 7px 18px;
+  font-family: var(--ff-primary);
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  color: #fff;
+  background: var(--clr-primary);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.drh-view-btn:hover {
+  background: var(--clr-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
+}
+
+.drh-view-btn:focus-visible {
+  outline: 2px solid var(--clr-border-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Map Overlays ---------- */
+
+/* Trip Summary Card */
+.trip-summary-card {
+  position: absolute;
+  bottom: var(--space-2xl);
+  left: var(--space-xl);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  max-width: 260px;
+  animation: fadeSlideUp 0.5s ease 0.3s both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.trip-summary-title {
+  font-size: 0.88rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+}
+
+.trip-summary-stats {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.trip-summary-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trip-summary-label {
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trip-summary-value {
+  font-size: 0.95rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--clr-text);
+}
+
+/* Eco Bonus Card */
+.eco-card {
+  background: var(--clr-accent-light);
+  border: 1px solid var(--clr-accent-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.eco-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--clr-accent);
+  flex-shrink: 0;
+}
+
+.eco-text {
+  font-size: 0.68rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-accent);
+  line-height: 1.4;
+}
+
+/* GPS Active Badge */
+.gps-active-badge {
+  position: absolute;
+  bottom: calc(var(--space-2xl) + 8px);
+  right: 70px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+.gps-active-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--clr-accent);
+  border-radius: 50%;
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.gps-active-text {
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  color: var(--clr-text-muted);
+}
+
+/* Map search button */
+.map-search-btn {
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--clr-card);
+  border: 1px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  color: var(--clr-text);
+  z-index: 10;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.map-search-btn:hover {
+  background: #f3f4f6;
+  transform: scale(1.08);
+}
+
+.map-search-btn svg { width: 18px; height: 18px; }
+
+/* Empty state */
+.drh-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  color: var(--clr-text-light);
+  text-align: center;
+}
+
+.drh-empty svg { width: 48px; height: 48px; opacity: 0.4; }
+
+.drh-empty-text {
+  font-size: 0.9rem;
+  font-weight: var(--fw-medium);
+}
+
+/* ============================================
+   RESPONSIVE OVERRIDES
+   ============================================ */
+@media (max-width: 860px) {
+  .drh-panel {
+    flex: none;
+    max-width: 100%;
+    padding: var(--space-xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 520px) {
+  .drh-panel {
+    padding: var(--space-lg) var(--space-md);
+    gap: var(--space-md);
+  }
+
+  .drh-heading { font-size: 1.35rem; }
+
+  .drh-filter { padding: 7px 16px; font-size: 0.75rem; }
+
+  .drh-card { padding: var(--space-md) var(--space-lg); }
+
+  .drh-stats-row { gap: var(--space-md); }
+
+  .trip-summary-card {
+    left: var(--space-md);
+    bottom: var(--space-xl);
+    max-width: 220px;
+  }
+
+  .gps-active-badge { right: 60px; bottom: var(--space-xl); }
+}

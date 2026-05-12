@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="RideFlow — Create your account and start your journey with seamless rides." />
+  <meta name="theme-color" content="#1a1a2e" />
+  <title>RideFlow — Register</title>
+
+  <!-- Google Fonts — Urbanist -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../../css/register.css" />
+</head>
+<body>
+
+  <!-- ===== Authentication Container ===== -->
+  <main class="auth-container" id="authContainer" role="main">
+
+    <!-- ── Left Panel: Registration Form ── -->
+    <section class="auth-form-panel" aria-label="Registration form">
+
+      <!-- Branding -->
+      <a href="login.html" class="brand-logo" aria-label="RideFlow — Go to login">
+        RideFlow<span class="logo-dot" aria-hidden="true"></span>
+      </a>
+
+      <!-- Heading -->
+      <h1 class="welcome-heading">Create your account</h1>
+      <p class="welcome-subtext">Start your journey with RideFlow today</p>
+
+      <!-- Role Toggle -->
+      <div class="role-toggle-wrapper">
+        <div class="role-toggle" id="roleToggle" role="radiogroup" aria-label="Select your role">
+          <div class="toggle-slider" aria-hidden="true"></div>
+          <button
+            type="button"
+            class="role-toggle-btn active"
+            id="riderBtn"
+            role="radio"
+            aria-checked="true"
+            data-role="rider"
+          >Rider</button>
+          <button
+            type="button"
+            class="role-toggle-btn"
+            id="driverBtn"
+            role="radio"
+            aria-checked="false"
+            data-role="driver"
+          >Driver</button>
+        </div>
+      </div>
+
+      <!-- Registration Form -->
+      <form class="register-form" id="registerForm" novalidate autocomplete="on">
+
+        <!-- First & Last Name — side by side -->
+        <div class="name-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="John"
+                autocomplete="given-name"
+                required
+                aria-describedby="firstNameError"
+              />
+            </div>
+            <span class="error-message" id="firstNameError" role="alert"></span>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Doe"
+                autocomplete="family-name"
+                required
+                aria-describedby="lastNameError"
+              />
+            </div>
+            <span class="error-message" id="lastNameError" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+              autocomplete="email"
+              required
+              aria-describedby="emailError"
+            />
+          </div>
+          <span class="error-message" id="emailError" role="alert"></span>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="input-wrapper">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+1 (555) 000-0000"
+              autocomplete="tel"
+              required
+              aria-describedby="phoneError"
+            />
+          </div>
+          <span class="error-message" id="phoneError" role="alert"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper has-toggle">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              required
+              aria-describedby="passwordError"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="togglePassword"
+              aria-label="Show password"
+              tabindex="0"
+            >
+              <!-- Eye open icon -->
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <!-- Eye closed icon -->
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
+          <span class="error-message" id="passwordError" role="alert"></span>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper has-toggle">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              required
+              aria-describedby="confirmPasswordError"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="toggleConfirmPassword"
+              aria-label="Show confirm password"
+              tabindex="0"
+            >
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
+          <span class="error-message" id="confirmPasswordError" role="alert"></span>
+          <!-- Password match indicator -->
+          <div class="password-match-indicator" id="matchIndicator">
+            <span class="indicator-icon" id="matchIcon"></span>
+            <span id="matchText"></span>
+          </div>
+        </div>
+
+        <!-- Driver-Only Fields (CNIC, License, Vehicle, Profile Picture) -->
+        <div class="driver-fields" id="driverFields" aria-live="polite">
+          
+          <!-- Profile Picture -->
+          <div class="form-group">
+            <label for="profilePicture">Profile Picture (Mandatory)</label>
+            <div class="input-wrapper">
+              <input
+                type="file"
+                id="profilePicture"
+                name="profilePicture"
+                accept="image/*"
+                aria-describedby="profilePictureError"
+              />
+            </div>
+            <span class="error-message" id="profilePictureError" role="alert"></span>
+          </div>
+
+          <!-- CNIC -->
+          <div class="form-group">
+            <label for="cnic">CNIC</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="cnic"
+                name="cnic"
+                placeholder="00000-0000000-0"
+                autocomplete="off"
+                aria-describedby="cnicError"
+              />
+            </div>
+            <span class="error-message" id="cnicError" role="alert"></span>
+          </div>
+
+          <!-- License Number -->
+          <div class="form-group">
+            <label for="licenseNumber">License Number</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="licenseNumber"
+                name="licenseNumber"
+                placeholder="ABC-12345"
+                autocomplete="off"
+                aria-describedby="licenseError"
+              />
+            </div>
+            <span class="error-message" id="licenseError" role="alert"></span>
+          </div>
+
+          <!-- Vehicle Info -->
+          <div class="name-row">
+            <div class="form-group">
+              <label for="vehicleMake">Vehicle Make</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="vehicleMake"
+                  name="vehicleMake"
+                  placeholder="Toyota"
+                  aria-describedby="vehicleMakeError"
+                />
+              </div>
+              <span class="error-message" id="vehicleMakeError" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="vehicleModel">Vehicle Model</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="vehicleModel"
+                  name="vehicleModel"
+                  placeholder="Prius"
+                  aria-describedby="vehicleModelError"
+                />
+              </div>
+              <span class="error-message" id="vehicleModelError" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="name-row">
+            <div class="form-group">
+              <label for="vehicleType">Vehicle Type</label>
+              <div class="input-wrapper">
+                <select id="vehicleType" name="vehicleType" style="width:100%; padding:14px; background:var(--bg-layer); border:2px solid var(--border-color); border-radius:12px; color:var(--text-main); font-size:15px;">
+                  <option value="Economy">Economy</option>
+                  <option value="Premium">Premium</option>
+                  <option value="Bike">Bike</option>
+                </select>
+              </div>
+              <span class="error-message" id="vehicleTypeError" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="licensePlate">License Plate</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="licensePlate"
+                  name="licensePlate"
+                  placeholder="ABC-123"
+                  aria-describedby="licensePlateError"
+                />
+              </div>
+              <span class="error-message" id="licensePlateError" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="name-row">
+            <div class="form-group">
+              <label for="vehicleYear">Vehicle Year</label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="vehicleYear"
+                  name="vehicleYear"
+                  placeholder="2024"
+                  min="1990"
+                  max="2025"
+                  aria-describedby="vehicleYearError"
+                />
+              </div>
+              <span class="error-message" id="vehicleYearError" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="vehicleColor">Vehicle Color</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="vehicleColor"
+                  name="vehicleColor"
+                  placeholder="White"
+                  aria-describedby="vehicleColorError"
+                />
+              </div>
+              <span class="error-message" id="vehicleColorError" role="alert"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Register Button -->
+        <button type="submit" class="btn-register" id="registerBtn">
+          <span class="btn-text">Register</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <!-- Login redirect -->
+      <p class="login-text">
+        Already have an account? <a href="login.html" class="login-link" id="loginLink">Login</a>
+      </p>
+    </section>
+
+    <!-- ── Right Panel: Image ── -->
+    <aside class="auth-image-panel" aria-label="Decorative travel illustration">
+      <img
+        src="../../assets/rideflow-map.png"
+        alt="Illustrated map showing a car traveling along a winding road with GPS markers"
+        loading="eager"
+        draggable="false"
+      />
+      <!-- Overlay gradient -->
+      <div class="image-overlay" aria-hidden="true"></div>
+      <!-- Footer text -->
+      <p class="image-footer-text" aria-hidden="true">© 2024 RideFlow Inc. Reliable. Efficient. Modern.</p>
+      <!-- Carousel dots -->
+      <div class="carousel-dots" aria-hidden="true">
+        <button class="carousel-dot active" data-index="0"></button>
+        <button class="carousel-dot" data-index="1"></button>
+        <button class="carousel-dot" data-index="2"></button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script src="../../js/register.js"></script>
+</body>
+</html>

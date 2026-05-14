@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setUserChrome();
   resetEstimate();
   loadLocations();
+  loadWalletBalance();
 
   logoutLink?.addEventListener('click', (e) => {
     e.preventDefault();
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sidebarOverlay.addEventListener('click', closeSidebar);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+    if (e.key === 'Escape' && topupOverlay.classList.contains('visible')) closeTopupModal();
   });
 
   pickupInput.addEventListener('input', () => {
@@ -123,6 +125,121 @@ document.addEventListener('DOMContentLoaded', () => {
     mapZoom = 1;
     mapImage.style.transform = 'scale(1)';
   });
+
+  // ── Wallet Top-Up Modal ──
+  const topupOverlay   = document.getElementById('topupOverlay');
+  const topupCloseBtn  = document.getElementById('topupCloseBtn');
+  const openTopupBtn   = document.getElementById('openTopupBtn');
+  const topupAmountInput = document.getElementById('topupAmount');
+  const topupSubmitBtn = document.getElementById('topupSubmitBtn');
+  const topupError     = document.getElementById('topupError');
+  const topupSuccess   = document.getElementById('topupSuccess');
+  const topupSuccessMsg = document.getElementById('topupSuccessMsg');
+  const topupPresets   = document.querySelectorAll('.topup-preset');
+  const walletBalanceEl = document.getElementById('walletBalance');
+  const topupCurrentBalance = document.getElementById('topupCurrentBalance');
+
+  let currentWalletBalance = 0;
+
+  openTopupBtn?.addEventListener('click', () => openTopupModal());
+  topupCloseBtn?.addEventListener('click', () => closeTopupModal());
+  topupOverlay?.addEventListener('click', (e) => {
+    if (e.target === topupOverlay) closeTopupModal();
+  });
+
+  topupPresets.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      topupPresets.forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      topupAmountInput.value = btn.dataset.amount;
+      topupError.textContent = '';
+    });
+  });
+
+  topupAmountInput?.addEventListener('input', () => {
+    topupPresets.forEach((b) => b.classList.remove('selected'));
+    topupError.textContent = '';
+  });
+
+  topupSubmitBtn?.addEventListener('click', async () => {
+    const amount = Number(topupAmountInput.value);
+    if (!amount || amount <= 0) {
+      topupError.textContent = 'Please enter a valid amount.';
+      return;
+    }
+    if (amount > 50000) {
+      topupError.textContent = 'Maximum top-up amount is Rs. 50,000.';
+      return;
+    }
+
+    topupError.textContent = '';
+    topupSubmitBtn.classList.add('loading');
+    topupSubmitBtn.disabled = true;
+
+    try {
+      const res = await fetch(`${API}/rider/wallet/topup`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Top-up failed.');
+
+      currentWalletBalance = data.walletBalance;
+      updateWalletDisplay(currentWalletBalance);
+
+      topupSubmitBtn.classList.remove('loading');
+      topupSubmitBtn.disabled = false;
+      topupSubmitBtn.style.display = 'none';
+      topupSuccessMsg.textContent = `Rs. ${amount.toFixed(2)} added successfully!`;
+      topupSuccess.classList.add('visible');
+
+      setTimeout(() => closeTopupModal(), 2000);
+    } catch (err) {
+      topupSubmitBtn.classList.remove('loading');
+      topupSubmitBtn.disabled = false;
+      topupError.textContent = err.message;
+    }
+  });
+
+  function openTopupModal() {
+    topupAmountInput.value = '';
+    topupError.textContent = '';
+    topupPresets.forEach((b) => b.classList.remove('selected'));
+    topupSubmitBtn.style.display = '';
+    topupSubmitBtn.classList.remove('loading');
+    topupSubmitBtn.disabled = false;
+    topupSuccess.classList.remove('visible');
+    topupCurrentBalance.textContent = formatMoney(currentWalletBalance);
+    topupOverlay.classList.add('visible');
+  }
+
+  function closeTopupModal() {
+    topupOverlay.classList.remove('visible');
+  }
+
+  async function loadWalletBalance() {
+    try {
+      const res = await fetch(`${API}/rider/wallet/balance`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        currentWalletBalance = data.walletBalance || 0;
+        updateWalletDisplay(currentWalletBalance);
+      }
+    } catch (err) {
+      console.error('Wallet balance load failed:', err);
+    }
+  }
+
+  function updateWalletDisplay(balance) {
+    if (walletBalanceEl) walletBalanceEl.textContent = formatMoney(balance);
+    if (topupCurrentBalance) topupCurrentBalance.textContent = formatMoney(balance);
+  }
 
   async function loadLocations() {
     try {

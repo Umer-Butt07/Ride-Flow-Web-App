@@ -2,9 +2,10 @@
 -- RideFlow Database Schema
 -- =========================================
 
-DROP DATABASE IF EXISTS RideFlow;
-CREATE DATABASE RideFlow;
-USE RideFlow;
+DROP DATABASE IF EXISTS rideflow;
+CREATE DATABASE rideflow;
+USE rideflow;
+ALTER TABLE Users ADD COLUMN ProfilePicture VARCHAR(255) NULL;
 
 -- =========================================
 -- 1. USERS
@@ -19,7 +20,8 @@ CREATE TABLE Users (
     Role         ENUM('Admin', 'Rider', 'Driver') NOT NULL,
     AccountStatus ENUM('Active', 'Suspended', 'Banned') NOT NULL DEFAULT 'Active',
     WalletBalance FLOAT        NOT NULL DEFAULT 0,
-    RegDate      DATE         NOT NULL DEFAULT (CURDATE())
+    RegDate      DATE         NOT NULL DEFAULT (CURDATE()),
+    ProfilePicture VARCHAR(255) NULL
 );
 
 -- =========================================

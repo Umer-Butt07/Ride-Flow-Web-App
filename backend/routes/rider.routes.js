@@ -18,5 +18,7 @@ router.post('/rides/:id/pay',     ctrl.payRide);
 router.post('/rides/:id/cancel',  ctrl.cancelRide);
 router.post('/requests/:id/cancel', ctrl.cancelRequest);
 router.get('/locations',          ctrl.getLocations);
+router.get('/wallet/balance',    ctrl.getWalletBalance);
+router.post('/wallet/topup',     ctrl.topUpWallet);
 
 module.exports = router;

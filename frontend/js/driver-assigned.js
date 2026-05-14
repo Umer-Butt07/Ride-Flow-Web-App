@@ -97,6 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setText('.vehicle-color', ride.Color || '-');
     setText('.vehicle-plate', ride.LicensePlate || '-');
 
+    // Show driver profile picture if available
+    const driverAvatarEl = document.querySelector('.driver-avatar');
+    if (driverAvatarEl && ride.DriverProfilePicture) {
+      const src = ride.DriverProfilePicture.startsWith('http') ? ride.DriverProfilePicture : `http://localhost:5000${ride.DriverProfilePicture}`;
+      driverAvatarEl.innerHTML = `<img src="${src}" alt="Driver" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    }
+
+    // Show actual driver rating
+    const ratingEl = document.querySelector('.driver-rating');
+    if (ratingEl && ride.DriverRating != null) {
+      ratingEl.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> ${Number(ride.DriverRating).toFixed(1)} Rating`;
+    }
+
     const locationEls = document.querySelectorAll('.arrival-location-item');
     if (locationEls[0]) locationEls[0].lastChild.textContent = ` ${ride.PickupLocation || '-'}`;
     if (locationEls[1]) locationEls[1].lastChild.textContent = ` ${ride.DropoffLocation || '-'}`;
@@ -106,9 +119,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (statValues[1]) statValues[1].textContent = `${Number(ride.Distance || 0).toFixed(1)} km`;
     if (statValues[2]) statValues[2].textContent = `${Math.round(ride.Duration || 0)} mins`;
 
-    etaEl.textContent = Math.max(1, Math.ceil(Number(ride.Duration || 5) / 3));
     const heading = document.querySelector('.ride-status-heading');
-    if (heading) heading.textContent = ride.Status === 'InProgress' ? 'Your Ride is in Progress' : 'Your Driver is On the Way';
+    const arrivalMain = document.querySelector('.arrival-main');
+    if (ride.Status === 'InProgress') {
+      if (heading) heading.textContent = 'Your Ride is in Progress';
+      if (arrivalMain) {
+        arrivalMain.innerHTML = `
+          <svg class="arrival-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-3h8l2 3h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17l-1 2h2m14-2l1 2h-2"/>
+            <circle cx="7.5" cy="14" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/>
+          </svg>
+          <span class="arrival-time">Ride in Progress</span>
+          <span class="eta-pulse" aria-hidden="true"></span>`;
+      }
+    } else {
+      if (heading) heading.textContent = 'Your Driver is On the Way';
+      etaEl.textContent = Math.max(1, Math.ceil(Number(ride.Duration || 5) / 3));
+    }
   }
 
   function setUserChrome() {

@@ -81,9 +81,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setText('#todayEarnings', formatMoney(data.summary?.todayEarnings || 0));
       setText('#weeklyEarnings', formatMoney(data.summary?.weeklyEarnings || 0));
-      setText('#totalRides', data.summary?.totalTrips || 0);
+      setText('#totalRides', data.driver?.TotalTrips ?? data.summary?.totalTrips ?? 0);
       setText('#balanceAmount', formatMoney(data.summary?.totalEarnings || 0));
       setText('#earningsPill', formatMoney(data.summary?.todayEarnings || 0));
+
+      // Update sidebar rating and status from live data
+      if (data.driver) {
+        const metaEl = document.querySelector('.sidebar-driver-meta');
+        if (metaEl) {
+          const rating = data.driver.AvgRating != null ? Number(data.driver.AvgRating).toFixed(2) : '-';
+          const status = data.driver.AvailabilityStatus || 'Online';
+          metaEl.innerHTML = `${rating} Rating <span class="meta-dot" aria-hidden="true"></span> ${status}`;
+        }
+      }
 
       if (listEl) {
         const rides = data.recentRides || [];

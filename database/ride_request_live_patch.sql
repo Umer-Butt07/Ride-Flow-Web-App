@@ -1,4 +1,4 @@
-USE RideFlow;
+USE rideflow;
 
 -- Apply this to an existing RideFlow database before running the updated app.
 ALTER TABLE Ride_Requests

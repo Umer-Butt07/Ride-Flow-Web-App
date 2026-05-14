@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ============================================
+  // ============================================
   // CONFIRM PAYMENT
   // ============================================
   confirmBtn.addEventListener('click', async (e) => {
@@ -162,13 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmBtn.disabled = true;
 
     try {
-      if (loadedRide && loadedRide.PaymentStatus !== 'Paid') {
+      if (loadedRide) {
         const method = selectedMethod === 'wallet' ? 'Wallet' : selectedMethod === 'cash' ? 'Cash' : 'Card';
-        await fetch(`${API}/rider/rides/${loadedRide.RideID}/pay`, {
+        const payRes = await fetch(`${API}/rider/rides/${loadedRide.RideID}/pay`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({ paymentMethod: method })
         });
+        const payData = await payRes.json();
+        if (!payRes.ok) throw new Error(payData.error || 'Payment failed.');
       }
       confirmBtn.classList.remove('loading');
       confirmBtn.disabled = false;
@@ -187,6 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Payment failed:', err);
       confirmBtn.classList.remove('loading');
       confirmBtn.disabled = false;
+      // Show error to user
+      const errEl = document.querySelector('.payment-heading');
+      if (errEl) errEl.textContent = err.message;
+      setTimeout(() => { if (errEl) errEl.textContent = 'Payment Summary'; }, 3000);
     }
   });
 
@@ -277,6 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const driverName = `${loadedRide.DriverFirstName || ''} ${loadedRide.DriverLastName || ''}`.trim() || 'Driver';
       const driverNameEl = document.querySelector('.driver-name-text');
       if (driverNameEl) driverNameEl.textContent = driverName;
+
+      // Show driver profile picture
+      const driverAvatarEl = document.querySelector('.driver-avatar-sm');
+      if (driverAvatarEl && loadedRide.DriverProfilePicture) {
+        const src = loadedRide.DriverProfilePicture.startsWith('http') ? loadedRide.DriverProfilePicture : `http://localhost:5000${loadedRide.DriverProfilePicture}`;
+        driverAvatarEl.innerHTML = `<img src="${src}" alt="Driver" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      }
+
       const driverVehicleEl = document.querySelector('.driver-vehicle-text');
       if (driverVehicleEl) driverVehicleEl.innerHTML = `${loadedRide.Make || ''} ${loadedRide.Model || loadedRide.VehicleType || ''} (${loadedRide.Color || '-'}) <span class="plate-badge">${loadedRide.LicensePlate || '-'}</span>`;
 
@@ -289,11 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.fare-total-value, .success-amount').forEach((el) => {
         el.textContent = `Rs. ${Number(loadedRide.Fare || 0).toFixed(2)}`;
       });
-      if (loadedRide.PaymentStatus === 'Paid') {
-        statusBadge.textContent = 'Paid';
-        statusBadge.classList.remove('pending');
-        statusBadge.classList.add('paid');
-      }
+
+      // Don't auto-show "Paid" — rider still needs to confirm payment method
+      // The sp_complete_ride may have inserted a payment, but rider should still choose method
+      statusBadge.textContent = 'Pending';
+      statusBadge.classList.add('pending');
+      statusBadge.classList.remove('paid');
     } catch (err) {
       console.error('Payment summary load failed:', err);
     }

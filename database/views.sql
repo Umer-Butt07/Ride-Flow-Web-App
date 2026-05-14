@@ -1,4 +1,4 @@
-USE RideFlow;
+USE rideflow;
 
 -- =========================================
 -- VIEW 1: ActiveRidesView

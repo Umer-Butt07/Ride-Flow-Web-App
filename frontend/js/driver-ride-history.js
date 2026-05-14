@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="drh-status-dot"></span> ${r.Status}
             </div>
           </div>
-          <span class="drh-card-amount">$${Number(r.Fare||0).toFixed(2)}</span>
+          <span class="drh-card-amount">Rs. ${Number(r.Fare||0).toFixed(2)}</span>
         </div>
         <div class="drh-locations">
           <div class="drh-loc">
@@ -86,6 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadHistory();
+  loadDriverProfile();
+
+  // ── Load driver profile data for sidebar ──
+  async function loadDriverProfile() {
+    try {
+      const res = await fetch(`${API}/driver/dashboard`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const data = await res.json();
+      if (!res.ok || !data.driver) return;
+      const metaEl = document.querySelector('.sidebar-driver-meta');
+      if (metaEl) {
+        const ratingDisplay = data.driver.AvgRating != null ? Number(data.driver.AvgRating).toFixed(2) : '--';
+        metaEl.innerHTML = `${ratingDisplay} Rating <span class="meta-dot" aria-hidden="true"></span> ${data.driver.AvailabilityStatus || 'Online'}`;
+      }
+      const pill = document.getElementById('earningsPill');
+      if (pill) pill.textContent = `Rs. ${Number(data.todayStats?.earningsToday || 0).toFixed(2)}`;
+    } catch (err) { console.error('Profile load failed:', err); }
+  }
 
   // ── Filter Tabs ──
   filterBtns.forEach(btn => {

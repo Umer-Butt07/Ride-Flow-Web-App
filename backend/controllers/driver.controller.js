@@ -360,6 +360,13 @@ const updateRideStatus = async (req, res) => {
 const getEarnings = async (req, res) => {
   const driverId = req.user.userId;
 
+  // Fetch driver profile for rating + total trips
+  const [driverRows] = await pool.execute(
+    `SELECT d.AvgRating, d.TotalTrips, d.AvailabilityStatus
+     FROM Drivers d WHERE d.DriverID = ?`,
+    [driverId]
+  );
+
   const [summary] = await pool.execute(
     `SELECT
        COALESCE(SUM(FareAmount), 0) AS totalFare,
@@ -404,6 +411,7 @@ const getEarnings = async (req, res) => {
   );
 
   return res.json({
+    driver: driverRows[0] || null,
     summary: {
       totalEarnings:  summary[0].totalNet,
       todayEarnings:  today[0].todayNet,

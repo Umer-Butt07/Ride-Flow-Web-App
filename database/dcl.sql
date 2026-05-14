@@ -3,7 +3,7 @@
 -- Run AFTER schema.sql as root/admin user
 -- =========================================
 
-USE RideFlow;
+USE rideflow;
 
 -- =========================================
 -- Create MySQL Roles

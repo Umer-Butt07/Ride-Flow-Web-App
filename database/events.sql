@@ -1,4 +1,4 @@
-USE RideFlow;
+USE rideflow;
 
 -- =========================================
 -- MySQL Event Scheduler

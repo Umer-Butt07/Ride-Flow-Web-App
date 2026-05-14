@@ -80,14 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (!res.ok) return;
 
-      document.getElementById('ridesCount').textContent = data.todayStats?.tripsToday ?? '0';
+      document.getElementById('ridesCount').textContent = data.driver?.TotalTrips ?? data.todayStats?.tripsToday ?? '0';
       document.getElementById('earningsValue').textContent = formatMoney(data.todayStats?.earningsToday || 0);
       document.getElementById('earningsPill').textContent = formatMoney(data.todayStats?.earningsToday || 0);
 
       if (data.driver) {
         const metaEl = document.querySelector('.sidebar-driver-meta');
         if (metaEl) {
-          metaEl.innerHTML = `${data.driver.AvgRating ?? '-'} Rating <span class="meta-dot" aria-hidden="true"></span> <span id="sidebarStatus">${data.driver.AvailabilityStatus}</span>`;
+          const ratingDisplay = data.driver.AvgRating != null ? Number(data.driver.AvgRating).toFixed(2) : '--';
+          metaEl.innerHTML = `${ratingDisplay} Rating <span class="meta-dot" aria-hidden="true"></span> <span id="sidebarStatus">${data.driver.AvailabilityStatus}</span>`;
         }
         setOnlineState(data.driver.AvailabilityStatus === 'Online', false);
       }

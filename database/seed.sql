@@ -1,4 +1,4 @@
-USE RideFlow;
+USE rideflow;
 
 -- =========================================
 -- SAMPLE DATA SEED

@@ -211,11 +211,41 @@ const payRide = async (req, res) => {
   if (!rideRows.length) return res.status(404).json({ error: 'Ride not found.' });
 
   const ride = rideRows[0];
-  if (ride.Status !== 'InProgress') {
-    return res.status(400).json({ error: 'Ride must be InProgress to make payment.' });
+
+  // Check if payment already exists and is paid
+  const [existingPayment] = await pool.execute(
+    `SELECT PaymentID, PaymentStatus, PaymentMethod FROM Payments WHERE RideID = ?`,
+    [rideId]
+  );
+
+  if (existingPayment.length && existingPayment[0].PaymentStatus === 'Paid') {
+    // Payment already recorded (by sp_complete_ride). Just handle wallet deduction if needed.
+    if (paymentMethod === 'Wallet' && existingPayment[0].PaymentMethod !== 'Wallet') {
+      const [balanceRows] = await pool.execute(
+        `SELECT WalletBalance FROM Users WHERE UserID = ?`,
+        [riderId]
+      );
+      if (balanceRows[0].WalletBalance < ride.Fare) {
+        return res.status(400).json({ error: 'Insufficient wallet balance.' });
+      }
+      await pool.execute(
+        `UPDATE Users SET WalletBalance = WalletBalance - ? WHERE UserID = ?`,
+        [ride.Fare, riderId]
+      );
+      await pool.execute(
+        `UPDATE Payments SET PaymentMethod = ? WHERE RideID = ?`,
+        [paymentMethod, rideId]
+      );
+    }
+    return res.json({ message: 'Payment successful. Ride completed.' });
   }
 
-  // For Wallet payment, check balance
+  // Ride must be InProgress or Completed (driver may have just completed it)
+  if (!['InProgress', 'Completed'].includes(ride.Status)) {
+    return res.status(400).json({ error: 'Ride must be InProgress or Completed to make payment.' });
+  }
+
+  // For Wallet payment, check balance and deduct
   if (paymentMethod === 'Wallet') {
     const [balanceRows] = await pool.execute(
       `SELECT WalletBalance FROM Users WHERE UserID = ?`,
@@ -230,7 +260,7 @@ const payRide = async (req, res) => {
     );
   }
 
-  // Insert payment (trigger will auto-complete the ride)
+  // Insert payment (trigger will auto-complete the ride if still InProgress)
   await pool.execute(
     `INSERT INTO Payments (RideID, Amount, PaymentMethod, PaymentStatus, TxnDate)
      VALUES (?, ?, ?, 'Paid', NOW())
@@ -312,10 +342,12 @@ const getActiveRide = async (req, res) => {
             r.ScheduledTime, r.StartTime,
             u.FirstName AS DriverFirstName, u.LastName AS DriverLastName, u.ProfilePicture AS DriverProfilePicture,
             u.Phone AS DriverPhone,
+            d.AvgRating AS DriverRating,
             pl.Name AS PickupLocation, dl.Name AS DropoffLocation,
             v.Make, v.Model, v.Color, v.LicensePlate, v.VehicleType
      FROM Rides r
      JOIN Users     u  ON r.DriverID          = u.UserID
+     JOIN Drivers   d  ON r.DriverID          = d.DriverID
      JOIN Locations pl ON r.PickupLocationID  = pl.LocationID
      JOIN Locations dl ON r.DropoffLocationID = dl.LocationID
      JOIN Vehicles  v  ON r.VehicleID         = v.VehicleID
@@ -410,8 +442,48 @@ const getLocations = async (req, res) => {
   return res.json(rows);
 };
 
+// ─── POST /api/rider/wallet/topup ────────────────────────────────
+const topUpWallet = async (req, res) => {
+  const riderId = req.user.userId;
+  const { amount } = req.body;
+
+  const numAmount = Number(amount);
+  if (!numAmount || numAmount <= 0) {
+    return res.status(400).json({ error: 'Amount must be a positive number.' });
+  }
+  if (numAmount > 50000) {
+    return res.status(400).json({ error: 'Maximum top-up amount is Rs. 50,000.' });
+  }
+
+  await pool.execute(
+    `UPDATE Users SET WalletBalance = WalletBalance + ? WHERE UserID = ?`,
+    [numAmount, riderId]
+  );
+
+  const [rows] = await pool.execute(
+    `SELECT WalletBalance FROM Users WHERE UserID = ?`,
+    [riderId]
+  );
+
+  return res.json({
+    message: `Rs. ${numAmount.toFixed(2)} added to wallet successfully.`,
+    walletBalance: rows[0].WalletBalance,
+  });
+};
+
+// ─── GET /api/rider/wallet/balance ───────────────────────────────
+const getWalletBalance = async (req, res) => {
+  const riderId = req.user.userId;
+  const [rows] = await pool.execute(
+    `SELECT WalletBalance FROM Users WHERE UserID = ?`,
+    [riderId]
+  );
+  if (!rows.length) return res.status(404).json({ error: 'User not found.' });
+  return res.json({ walletBalance: rows[0].WalletBalance });
+};
+
 module.exports = {
   getDashboard, getRideHistory, requestRide, scheduleRide,
   estimateRide, rateRide, payRide, getLocations, getActiveRide, cancelRide,
-  cancelRequest, complainRide,
+  cancelRequest, complainRide, topUpWallet, getWalletBalance,
 };

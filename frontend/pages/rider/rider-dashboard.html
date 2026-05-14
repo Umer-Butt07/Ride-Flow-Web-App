@@ -112,10 +112,72 @@
         </a>
       </li>
     </ul>
+
+    <!-- Wallet Card -->
+    <div class="sidebar-wallet-card" id="walletCard">
+      <div class="wallet-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+      </div>
+      <div class="wallet-info">
+        <span class="wallet-label">Wallet Balance</span>
+        <span class="wallet-balance" id="walletBalance">Rs. 0.00</span>
+      </div>
+      <button class="wallet-topup-btn" id="openTopupBtn" type="button">+ Top Up</button>
+    </div>
   </aside>
 
   <!-- Sidebar mobile overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Wallet Top-Up Modal -->
+  <div class="topup-overlay" id="topupOverlay">
+    <div class="topup-modal" id="topupModal">
+      <button class="topup-close" id="topupCloseBtn" aria-label="Close top-up modal">&times;</button>
+      <h2 class="topup-heading">Top Up Wallet</h2>
+      <p class="topup-subtext">Add funds to your RideFlow wallet</p>
+      <div class="topup-balance-display">
+        <span class="topup-balance-label">Current Balance</span>
+        <span class="topup-balance-value" id="topupCurrentBalance">Rs. 0.00</span>
+      </div>
+      <div class="topup-presets">
+        <button class="topup-preset" data-amount="500">Rs. 500</button>
+        <button class="topup-preset" data-amount="1000">Rs. 1,000</button>
+        <button class="topup-preset" data-amount="2000">Rs. 2,000</button>
+        <button class="topup-preset" data-amount="5000">Rs. 5,000</button>
+      </div>
+      <div class="topup-input-group">
+        <label for="topupAmount">Custom Amount</label>
+        <div class="input-wrapper">
+          <input
+            type="number"
+            id="topupAmount"
+            name="topupAmount"
+            placeholder="Enter amount (Rs.)"
+            min="1"
+            max="50000"
+          />
+          <svg class="input-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+      </div>
+      <span class="topup-error" id="topupError" role="alert"></span>
+      <button class="topup-submit-btn" id="topupSubmitBtn" type="button">
+        <span class="btn-text">Add Funds</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </button>
+      <div class="topup-success" id="topupSuccess">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span id="topupSuccessMsg">Funds added!</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================
        MAIN CONTENT

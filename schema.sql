@@ -33,6 +33,7 @@ CREATE TABLE Drivers (
     AvailabilityStatus ENUM('Online', 'Offline', 'OnTrip')     NOT NULL DEFAULT 'Offline',
     AvgRating          FLOAT        NOT NULL DEFAULT 0,
     TotalTrips         INT          NOT NULL DEFAULT 0,
+    City               VARCHAR(50)  NOT NULL DEFAULT 'Lahore',
     FOREIGN KEY (DriverID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 

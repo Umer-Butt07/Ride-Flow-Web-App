@@ -5,7 +5,7 @@ const pool   = require('../db/connection');
 // ─── POST /api/auth/register ──────────────────────────────────────
 const register = async (req, res) => {
   const { firstName, lastName, email, phone, password, role,
-          licenseNo, cnic, vehicleMake, vehicleModel, vehicleType, licensePlate,
+          licenseNo, cnic, city, vehicleMake, vehicleModel, vehicleType, licensePlate,
           vehicleYear, vehicleColor } = req.body;
 
   if (!firstName || !lastName || !email || !phone || !password || !role) {
@@ -30,6 +30,10 @@ const register = async (req, res) => {
     if (!vehicleMake || !vehicleModel || !vehicleType || !licensePlate || !vehicleYear || !vehicleColor) {
       return res.status(400).json({ error: 'Driver must provide all vehicle details.' });
     }
+    const allowedCities = ['Lahore', 'Karachi'];
+    if (!city || !allowedCities.includes(city)) {
+      return res.status(400).json({ error: 'Driver must select a city (Lahore or Karachi).' });
+    }
   }
 
   const conn = await pool.getConnection();
@@ -47,9 +51,9 @@ const register = async (req, res) => {
 
     if (role === 'Driver') {
       await conn.execute(
-        `INSERT INTO Drivers (DriverID, LicenseNo, CNIC, VerificationStatus, AvailabilityStatus)
-         VALUES (?, ?, ?, 'Pending', 'Offline')`,
-        [userId, licenseNo, cnic]
+        `INSERT INTO Drivers (DriverID, LicenseNo, CNIC, VerificationStatus, AvailabilityStatus, City)
+         VALUES (?, ?, ?, 'Pending', 'Offline', ?)`,
+        [userId, licenseNo, cnic, city]
       );
       await conn.execute(
         `INSERT INTO Vehicles (DriverID, VehicleType, Make, Model, LicensePlate, Year, Color, VerificationStatus)

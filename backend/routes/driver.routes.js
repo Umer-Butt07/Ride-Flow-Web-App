@@ -22,5 +22,6 @@ router.post('/payout',                ctrl.requestPayout);
 router.post('/rides/:id/rate',        ctrl.rateRider);
 router.post('/vehicles',              ctrl.registerVehicle);
 router.get('/vehicles',               ctrl.getVehicles);
+router.patch('/city',                 ctrl.updateCity);
 
 module.exports = router;

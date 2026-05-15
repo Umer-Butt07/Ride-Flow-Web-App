@@ -158,6 +158,46 @@
           <span class="status-badge-text" id="statusText">Status: Available</span>
         </div>
 
+        <!-- City Badge Card -->
+        <div class="city-badge-card" id="cityBadgeCard">
+          <div class="city-badge-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div class="city-info">
+              <span class="city-label">Operating City</span>
+              <span class="city-name" id="cityName">--</span>
+            </div>
+          </div>
+          <button class="btn-change-city" id="changeCityBtn" type="button">Change</button>
+        </div>
+
+        <!-- City Change Modal -->
+        <div class="city-modal-overlay" id="cityModalOverlay">
+          <div class="city-modal">
+            <h3>Change Operating City</h3>
+            <p>Select your new city. Only rides from your city will be shown to you.</p>
+            <div class="city-options">
+              <button class="city-option" data-city="Lahore" id="cityOptLahore">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Lahore
+              </button>
+              <button class="city-option" data-city="Karachi" id="cityOptKarachi">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Karachi
+              </button>
+            </div>
+            <button class="btn-cancel-city" id="cancelCityBtn" type="button">Cancel</button>
+          </div>
+        </div>
+
         <!-- Stat Cards -->
         <div class="stat-cards">
           <div class="stat-card">

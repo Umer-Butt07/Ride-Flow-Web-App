@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoomInBtn = document.getElementById('zoomInBtn');
   const zoomOutBtn = document.getElementById('zoomOutBtn');
   const locationBtn = document.getElementById('locationBtn');
+  const changeCityBtn = document.getElementById('changeCityBtn');
+  const cityModalOverlay = document.getElementById('cityModalOverlay');
+  const cancelCityBtn = document.getElementById('cancelCityBtn');
+  const cityName = document.getElementById('cityName');
+  const cityOptions = document.querySelectorAll('.city-option');
 
   let mapZoom = 1;
 
@@ -72,6 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     mapImage.style.transform = 'scale(1)';
   });
 
+  // City change modal
+  changeCityBtn.addEventListener('click', openCityModal);
+  cancelCityBtn.addEventListener('click', closeCityModal);
+  cityModalOverlay.addEventListener('click', (e) => {
+    if (e.target === cityModalOverlay) closeCityModal();
+  });
+  cityOptions.forEach(btn => {
+    btn.addEventListener('click', () => changeCity(btn.dataset.city));
+  });
+
   async function loadDashboard() {
     try {
       const res = await fetch(`${API}/driver/dashboard`, {
@@ -91,6 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
           metaEl.innerHTML = `${ratingDisplay} Rating <span class="meta-dot" aria-hidden="true"></span> <span id="sidebarStatus">${data.driver.AvailabilityStatus}</span>`;
         }
         setOnlineState(data.driver.AvailabilityStatus === 'Online', false);
+
+        // Display driver's city
+        if (data.driver.City) {
+          cityName.textContent = data.driver.City;
+          highlightActiveCity(data.driver.City);
+        }
       }
 
       if (data.activeRide) {
@@ -191,5 +212,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function formatMoney(value) {
     return `Rs. ${Number(value || 0).toFixed(2)}`;
+  }
+
+  function openCityModal() {
+    cityModalOverlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCityModal() {
+    cityModalOverlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function highlightActiveCity(city) {
+    cityOptions.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.city === city);
+    });
+  }
+
+  async function changeCity(newCity) {
+    try {
+      cityOptions.forEach(b => { b.disabled = true; });
+      const res = await fetch(`${API}/driver/city`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ city: newCity }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || 'Failed to update city.');
+        return;
+      }
+      cityName.textContent = newCity;
+      highlightActiveCity(newCity);
+      closeCityModal();
+    } catch (err) {
+      console.error('City change failed:', err);
+      alert('Network error. Could not change city.');
+    } finally {
+      cityOptions.forEach(b => { b.disabled = false; });
+    }
   }
 });

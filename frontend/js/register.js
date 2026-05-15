@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const licensePlateInput   = document.getElementById('licensePlate');
   const vehicleYearInput    = document.getElementById('vehicleYear');
   const vehicleColorInput   = document.getElementById('vehicleColor');
+  const driverCityInput     = document.getElementById('driverCity');
 
   // Error elements
   const firstNameError      = document.getElementById('firstNameError');
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const licensePlateError   = document.getElementById('licensePlateError');
   const vehicleYearError    = document.getElementById('vehicleYearError');
   const vehicleColorError   = document.getElementById('vehicleColorError');
+  const driverCityError     = document.getElementById('driverCityError');
 
   // Current role state
   let selectedRole = 'rider';
@@ -97,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (licensePlateInput) clearError(licensePlateInput, licensePlateError);
     if (vehicleYearInput) clearError(vehicleYearInput, vehicleYearError);
     if (vehicleColorInput) clearError(vehicleColorInput, vehicleColorError);
+    if (driverCityInput) clearError(driverCityInput, driverCityError);
     cnicInput.value = '';
     licenseInput.value = '';
     if (profilePictureInput) profilePictureInput.value = '';
@@ -105,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (licensePlateInput) licensePlateInput.value = '';
     if (vehicleYearInput) vehicleYearInput.value = '';
     if (vehicleColorInput) vehicleColorInput.value = '';
+    if (driverCityInput) driverCityInput.value = '';
   }
 
   // Keyboard navigation for toggle
@@ -374,6 +378,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  function validateDriverCity() {
+    if (!driverCityInput.value) {
+      showError(driverCityInput, driverCityError, 'Please select your operating city');
+      return false;
+    }
+    showSuccess(driverCityInput, driverCityError);
+    return true;
+  }
+
   // ── Live Validation on Input (only after first error) ──
   const fieldValidators = [
     { input: firstNameInput,       error: firstNameError,       validate: validateFirstName },
@@ -390,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { input: licensePlateInput,    error: licensePlateError,    validate: validateLicensePlate },
     { input: vehicleYearInput,     error: vehicleYearError,     validate: validateVehicleYear },
     { input: vehicleColorInput,    error: vehicleColorError,    validate: validateVehicleColor },
+    { input: driverCityInput,      error: driverCityError,      validate: validateDriverCity },
   ];
 
   fieldValidators.forEach(({ input, error, validate }) => {
@@ -446,6 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       results.push(validateLicensePlate());
       results.push(validateVehicleYear());
       results.push(validateVehicleColor());
+      results.push(validateDriverCity());
     }
 
     const allValid = results.every(Boolean);
@@ -493,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('licensePlate', licensePlateInput.value.trim());
         formData.append('vehicleYear', vehicleYearInput.value.trim());
         formData.append('vehicleColor', vehicleColorInput.value.trim());
+        formData.append('city', driverCityInput.value);
         if (profilePictureInput.files[0]) {
           formData.append('profilePicture', profilePictureInput.files[0]);
         }

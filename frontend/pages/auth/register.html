@@ -206,9 +206,22 @@
           </div>
         </div>
 
-        <!-- Driver-Only Fields (CNIC, License, Vehicle, Profile Picture) -->
+        <!-- Driver-Only Fields (City, CNIC, License, Vehicle, Profile Picture) -->
         <div class="driver-fields" id="driverFields" aria-live="polite">
           
+          <!-- City Selection -->
+          <div class="form-group">
+            <label for="driverCity">Operating City</label>
+            <div class="input-wrapper">
+              <select id="driverCity" name="driverCity" style="width:100%; padding:14px; background:var(--bg-layer); border:2px solid var(--border-color); border-radius:12px; color:var(--text-main); font-size:15px;">
+                <option value="">Select your city</option>
+                <option value="Lahore">Lahore</option>
+                <option value="Karachi">Karachi</option>
+              </select>
+            </div>
+            <span class="error-message" id="driverCityError" role="alert"></span>
+          </div>
+
           <!-- Profile Picture -->
           <div class="form-group">
             <label for="profilePicture">Profile Picture (Mandatory)</label>

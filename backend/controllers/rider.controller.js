@@ -89,15 +89,18 @@ const requestRide = async (req, res) => {
   }
 
   // Find an available online verified driver with a matching verified vehicle.
+  // Filter by city: driver's city must match the pickup location's city.
   const [driverRows] = await pool.execute(
     `SELECT d.DriverID, v.VehicleID
      FROM Drivers d
      JOIN Users u ON d.DriverID = u.UserID
      JOIN Vehicles v ON v.DriverID = d.DriverID AND v.VerificationStatus = 'Verified'
+     JOIN Locations pl ON pl.LocationID = ?
      WHERE d.AvailabilityStatus = 'Online'
        AND d.VerificationStatus = 'Verified'
        AND u.AccountStatus = 'Active'
        AND v.VehicleType = ?
+       AND d.City = pl.City
        AND NOT EXISTS (
          SELECT 1 FROM Rides r
          WHERE r.DriverID = d.DriverID AND r.Status IN ('EnRoute', 'InProgress')
@@ -105,7 +108,7 @@ const requestRide = async (req, res) => {
      ORDER BY d.AvgRating DESC, d.TotalTrips ASC
      LIMIT 1`
     ,
-    [estimate.vehicleType]
+    [pickupLocationId, estimate.vehicleType]
   );
 
   if (!driverRows.length) {
@@ -303,15 +306,18 @@ const scheduleRide = async (req, res) => {
     promoId = promoRows[0].PromoID;
   }
 
-  // Find best available driver
+  // Find best available driver filtered by pickup city
   const [driverRows] = await pool.execute(
     `SELECT d.DriverID FROM Drivers d
      JOIN Users u ON d.DriverID = u.UserID
+     JOIN Locations pl ON pl.LocationID = ?
      WHERE d.AvailabilityStatus = 'Online'
        AND d.VerificationStatus = 'Verified'
        AND u.AccountStatus = 'Active'
+       AND d.City = pl.City
      ORDER BY d.AvgRating DESC
-     LIMIT 1`
+     LIMIT 1`,
+    [pickupLocationId]
   );
 
   if (!driverRows.length) {

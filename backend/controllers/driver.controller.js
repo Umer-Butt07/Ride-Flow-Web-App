@@ -7,7 +7,7 @@ const getDashboard = async (req, res) => {
 
   // Driver profile + availability
   const [driverRows] = await pool.execute(
-    `SELECT d.AvailabilityStatus, d.AvgRating, d.TotalTrips, d.VerificationStatus,
+    `SELECT d.AvailabilityStatus, d.AvgRating, d.TotalTrips, d.VerificationStatus, d.City,
             u.FirstName, u.LastName, u.Email, u.Phone, u.WalletBalance
      FROM Drivers d JOIN Users u ON d.DriverID = u.UserID
      WHERE d.DriverID = ?`,
@@ -235,16 +235,19 @@ const rejectRequest = async (req, res) => {
     );
 
     // Find next available driver (excluding the one who just rejected)
+    // Filter by city: next driver must be in the same city as the pickup location
     const [nextDriver] = await conn.execute(
       `SELECT d.DriverID FROM Drivers d
        JOIN Users u ON d.DriverID = u.UserID
+       JOIN Locations pl ON pl.LocationID = ?
        WHERE d.AvailabilityStatus = 'Online'
          AND d.VerificationStatus = 'Verified'
          AND u.AccountStatus = 'Active'
          AND d.DriverID != ?
+         AND d.City = pl.City
        ORDER BY d.AvgRating DESC
        LIMIT 1`,
-      [driverId]
+      [rideReq.PickupLocationID, driverId]
     );
 
     let reassigned = false;
@@ -474,7 +477,7 @@ const getProfile = async (req, res) => {
     `SELECT u.UserID, u.FirstName, u.LastName, u.Email, u.Phone,
             u.AccountStatus, u.WalletBalance, u.RegDate,
             d.LicenseNo, d.CNIC, d.VerificationStatus, d.AvailabilityStatus,
-            d.AvgRating, d.TotalTrips,
+            d.AvgRating, d.TotalTrips, d.City,
             v.VehicleID, v.VehicleType, v.Make, v.Model, v.Year,
             v.Color, v.LicensePlate, v.VerificationStatus AS VehicleStatus
      FROM Users u
@@ -600,10 +603,37 @@ const rateRider = async (req, res) => {
   return res.status(201).json({ message: 'Rider rating submitted successfully.' });
 };
 
+// ─── PATCH /api/driver/city ───────────────────────────────────────
+// Driver can change their operating city
+const updateCity = async (req, res) => {
+  const driverId = req.user.userId;
+  const { city } = req.body;
+
+  const allowedCities = ['Lahore', 'Karachi'];
+  if (!city || !allowedCities.includes(city)) {
+    return res.status(400).json({ error: 'City must be Lahore or Karachi.' });
+  }
+
+  // Cannot change city while on an active ride
+  const [activeRide] = await pool.execute(
+    `SELECT RideID FROM Rides WHERE DriverID = ? AND Status IN ('EnRoute','InProgress') LIMIT 1`,
+    [driverId]
+  );
+  if (activeRide.length) {
+    return res.status(400).json({ error: 'Cannot change city while on an active ride.' });
+  }
+
+  await pool.execute(
+    `UPDATE Drivers SET City = ? WHERE DriverID = ?`,
+    [city, driverId]
+  );
+  return res.json({ message: `City updated to ${city}.`, city });
+};
+
 module.exports = {
   getDashboard, setAvailability, getRequests,
   acceptRequest, rejectRequest, getCurrentRide,
   updateRideStatus, getEarnings, getEarningsHistory,
   getRideHistory, getProfile, registerVehicle, getVehicles,
-  requestPayout, rateRider,
+  requestPayout, rateRider, updateCity,
 };

@@ -1,15 +1,9 @@
--- =========================================
--- RideFlow Database Schema
--- =========================================
-
 DROP DATABASE IF EXISTS rideflow;
 CREATE DATABASE rideflow;
 USE rideflow;
 ALTER TABLE Users ADD COLUMN ProfilePicture VARCHAR(255) NULL;
 
--- =========================================
 -- 1. USERS
--- =========================================
 CREATE TABLE Users (
     UserID       INT PRIMARY KEY AUTO_INCREMENT,
     FirstName    VARCHAR(50)  NOT NULL,
@@ -24,9 +18,7 @@ CREATE TABLE Users (
     ProfilePicture VARCHAR(255) NULL
 );
 
--- =========================================
 -- 2. DRIVERS
--- =========================================
 CREATE TABLE Drivers (
     DriverID           INT PRIMARY KEY,
     LicenseNo          VARCHAR(50)  NOT NULL,
@@ -38,9 +30,7 @@ CREATE TABLE Drivers (
     FOREIGN KEY (DriverID) REFERENCES Users(UserID) ON DELETE CASCADE
 );
 
--- =========================================
 -- 3. LOCATIONS
--- =========================================
 CREATE TABLE Locations (
     LocationID INT PRIMARY KEY AUTO_INCREMENT,
     Name       VARCHAR(100) NOT NULL,
@@ -49,9 +39,7 @@ CREATE TABLE Locations (
     Longitude  FLOAT        NOT NULL
 );
 
--- =========================================
 -- 4. VEHICLES
--- =========================================
 CREATE TABLE Vehicles (
     VehicleID          INT PRIMARY KEY AUTO_INCREMENT,
     DriverID           INT          NOT NULL,
@@ -65,9 +53,7 @@ CREATE TABLE Vehicles (
     FOREIGN KEY (DriverID) REFERENCES Drivers(DriverID) ON DELETE CASCADE
 );
 
--- =========================================
 -- 5. PROMO_CODES
--- =========================================
 CREATE TABLE Promo_Codes (
     PromoID      INT PRIMARY KEY AUTO_INCREMENT,
     Code         VARCHAR(50)  NOT NULL UNIQUE,
@@ -78,9 +64,7 @@ CREATE TABLE Promo_Codes (
     IsActive     TINYINT(1)   NOT NULL DEFAULT 1
 );
 
--- =========================================
 -- 6. RIDE_REQUESTS
--- =========================================
 CREATE TABLE Ride_Requests (
     RequestID         INT PRIMARY KEY AUTO_INCREMENT,
     RiderID           INT      NOT NULL,
@@ -102,9 +86,7 @@ CREATE TABLE Ride_Requests (
     FOREIGN KEY (PromoID)           REFERENCES Promo_Codes(PromoID)
 );
 
--- =========================================
--- 7. RIDES (CORE TABLE)
--- =========================================
+-- 7. RIDES 
 CREATE TABLE Rides (
     RideID            INT PRIMARY KEY AUTO_INCREMENT,
     RequestID         INT      NOT NULL,
@@ -131,9 +113,7 @@ CREATE TABLE Rides (
     FOREIGN KEY (PromoID)           REFERENCES Promo_Codes(PromoID)
 );
 
--- =========================================
 -- 8. PAYMENTS
--- =========================================
 CREATE TABLE Payments (
     PaymentID     INT PRIMARY KEY AUTO_INCREMENT,
     RideID        INT  NOT NULL UNIQUE,
@@ -145,9 +125,7 @@ CREATE TABLE Payments (
     FOREIGN KEY (RideID) REFERENCES Rides(RideID) ON DELETE CASCADE
 );
 
--- =========================================
 -- 9. RATINGS
--- =========================================
 CREATE TABLE Ratings (
     RatingID    INT PRIMARY KEY AUTO_INCREMENT,
     RideID      INT      NOT NULL,
@@ -162,9 +140,7 @@ CREATE TABLE Ratings (
     FOREIGN KEY (RatedUserID) REFERENCES Users(UserID)
 );
 
--- =========================================
 -- 10. DRIVER_EARNINGS
--- =========================================
 CREATE TABLE Driver_Earnings (
     EarningID  INT PRIMARY KEY AUTO_INCREMENT,
     DriverID   INT   NOT NULL,
@@ -177,9 +153,7 @@ CREATE TABLE Driver_Earnings (
     FOREIGN KEY (RideID)   REFERENCES Rides(RideID)
 );
 
--- =========================================
 -- 11. COMPLAINTS
--- =========================================
 CREATE TABLE Complaints (
     ComplaintID    INT PRIMARY KEY AUTO_INCREMENT,
     RideID         INT         NOT NULL,
@@ -194,9 +168,7 @@ CREATE TABLE Complaints (
     FOREIGN KEY (AgainstUserID) REFERENCES Users(UserID)
 );
 
--- =========================================
 -- 12. RIDE_HISTORY
--- =========================================
 CREATE TABLE Ride_History (
     HistoryID   INT PRIMARY KEY AUTO_INCREMENT,
     RideID      INT         NOT NULL,
@@ -206,9 +178,7 @@ CREATE TABLE Ride_History (
     FOREIGN KEY (RideID) REFERENCES Rides(RideID)
 );
 
--- =========================================
--- INDEXES (Performance)
--- =========================================
+-- INDEXES 
 CREATE INDEX idx_rides_rider_id    ON Rides(RiderID);
 CREATE INDEX idx_rides_driver_id   ON Rides(DriverID);
 CREATE INDEX idx_rides_status      ON Rides(Status);
@@ -216,6 +186,3 @@ CREATE INDEX idx_locations_city    ON Locations(City);
 CREATE INDEX idx_requests_status   ON Ride_Requests(Status);
 CREATE INDEX idx_payments_status   ON Payments(PaymentStatus);
 
--- =========================================
--- DONE ✅
--- =========================================

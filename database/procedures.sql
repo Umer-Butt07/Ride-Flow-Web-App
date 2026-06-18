@@ -2,11 +2,10 @@ USE rideflow;
 
 DELIMITER $$
 
--- =========================================
+
 -- STORED PROCEDURE 1: sp_calculate_fare
 -- Calculates fare using base rate + per-km + per-minute
 -- Applies surge multiplier during peak hours
--- =========================================
 DROP PROCEDURE IF EXISTS sp_calculate_fare$$
 
 CREATE PROCEDURE sp_calculate_fare(
@@ -70,11 +69,9 @@ BEGIN
 END$$
 
 
--- =========================================
 -- STORED PROCEDURE 2: sp_complete_ride
 -- Marks ride as Completed, inserts a Payment record
 -- Driver earnings are handled by trigger
--- =========================================
 DROP PROCEDURE IF EXISTS sp_complete_ride$$
 
 CREATE PROCEDURE sp_complete_ride(
@@ -110,10 +107,8 @@ BEGIN
 END$$
 
 
--- =========================================
 -- STORED PROCEDURE 3: sp_driver_earnings_summary
 -- Returns total, commission, and net earnings for a driver
--- =========================================
 DROP PROCEDURE IF EXISTS sp_driver_earnings_summary$$
 
 CREATE PROCEDURE sp_driver_earnings_summary(

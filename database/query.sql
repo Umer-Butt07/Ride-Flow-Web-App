@@ -1,16 +1,4 @@
--- =========================================
--- RideFlow — SQL Query Demonstrations
--- Covers: Basic SQL, Aggregates + HAVING,
---         JOINs for Reports
--- =========================================
-
 USE rideflow;
-
-
--- =========================================
--- COMPONENT 1: BASIC SQL QUERIES
--- SELECT, WHERE, ORDER BY
--- =========================================
 
 -- Q1: List all completed rides for a specific rider (ID=2) ordered by date
 SELECT r.RideID, r.Fare, r.Distance, r.Duration, r.Status,
@@ -75,11 +63,6 @@ WHERE AccountStatus IN ('Suspended', 'Banned')
 ORDER BY AccountStatus, RegDate DESC;
 
 
--- =========================================
--- COMPONENT 2: AGGREGATE FUNCTIONS & HAVING
--- SUM, AVG, COUNT, GROUP BY, HAVING
--- =========================================
-
 -- Q6: Total revenue per city using SUM (aggregate + GROUP BY)
 SELECT l.City,
        COUNT(p.PaymentID)       AS TotalRides,
@@ -142,12 +125,6 @@ WHERE p.PaymentStatus = 'Paid'
 GROUP BY l.City
 HAVING SUM(p.Amount) > 100
 ORDER BY TotalRevenue DESC;
-
-
--- =========================================
--- COMPONENT 3: JOINS FOR REPORTS
--- INNER JOIN, LEFT JOIN, Multi-table JOIN
--- =========================================
 
 -- Q11: Full trip report — INNER JOIN linking Riders, Rides, Drivers, Vehicles
 SELECT
@@ -292,7 +269,7 @@ WHERE PaymentStatus IN ('Failed', 'Refunded')
 GROUP BY PaymentStatus;
 
 
--- Q19: Driver leaderboard by city (uses the DriverLeaderboardView)
+-- Q19: Driver leaderboard by city 
 SELECT * FROM DriverLeaderboardView
 ORDER BY City, AvgRating DESC;
 
@@ -311,7 +288,3 @@ LEFT JOIN Ratings r_driver ON r_driver.RideID = r.RideID AND r_driver.RaterID = 
 WHERE r.Status = 'Completed'
 ORDER BY r.RideID DESC;
 
-
--- =========================================
--- DONE ✅
--- =========================================

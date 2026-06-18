@@ -1,9 +1,7 @@
 USE rideflow;
 
--- =========================================
 -- VIEW 1: ActiveRidesView
 -- Shows all ongoing trips with full rider and driver details
--- =========================================
 CREATE OR REPLACE VIEW ActiveRidesView AS
 SELECT
     r.RideID,
@@ -49,10 +47,8 @@ JOIN Locations pl      ON r.PickupLocationID  = pl.LocationID
 JOIN Locations dl      ON r.DropoffLocationID = dl.LocationID
 WHERE r.Status IN ('EnRoute', 'InProgress');
 
--- =========================================
 -- VIEW 2: TopDriversView
 -- Shows only drivers with average rating above 4.5
--- =========================================
 CREATE OR REPLACE VIEW TopDriversView AS
 SELECT
     d.DriverID,
@@ -75,10 +71,8 @@ WHERE d.AvgRating > 4.5
   AND d.VerificationStatus = 'Verified'
 ORDER BY d.AvgRating DESC;
 
--- =========================================
 -- VIEW 3: DriverLeaderboardView
 -- Live leaderboard of top-rated drivers per city
--- =========================================
 CREATE OR REPLACE VIEW DriverLeaderboardView AS
 SELECT
     d.DriverID,

@@ -1,6 +1,5 @@
 USE rideflow;
 
--- Apply this to an existing RideFlow database before running the updated app.
 ALTER TABLE Ride_Requests
   MODIFY Status ENUM('Requested', 'Accepted', 'Rejected', 'Cancelled') NOT NULL DEFAULT 'Requested',
   ADD COLUMN RequestedVehicleType ENUM('Economy', 'Premium', 'Bike') NOT NULL DEFAULT 'Economy' AFTER DropoffLocationID,

@@ -2,9 +2,7 @@ USE rideflow;
 
 DELIMITER $$
 
--- =========================================
 -- TRIGGER 1: RIDE → RIDE_HISTORY (on Completed/Cancelled)
--- =========================================
 DROP TRIGGER IF EXISTS trg_ride_to_history$$
 
 CREATE TRIGGER trg_ride_to_history
@@ -18,9 +16,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 2: UPDATE DRIVER AVG RATING
--- =========================================
 DROP TRIGGER IF EXISTS trg_update_driver_rating$$
 
 CREATE TRIGGER trg_update_driver_rating
@@ -37,9 +33,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 3: DRIVER EARNINGS ON RIDE COMPLETION
--- =========================================
 DROP TRIGGER IF EXISTS trg_driver_earnings$$
 
 CREATE TRIGGER trg_driver_earnings
@@ -64,9 +58,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 4: FLAG LOW RATING (AUTO SUSPEND / RECOVER)
--- =========================================
 DROP TRIGGER IF EXISTS trg_flag_low_rating$$
 
 CREATE TRIGGER trg_flag_low_rating
@@ -112,9 +104,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 5: AUTO-COMPLETE RIDE WHEN PAYMENT IS PAID
--- =========================================
 DROP TRIGGER IF EXISTS trg_payment_to_ride_completed$$
 
 CREATE TRIGGER trg_payment_to_ride_completed
@@ -129,9 +119,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 6: INCREMENT PROMO USAGE COUNT
--- =========================================
 DROP TRIGGER IF EXISTS trg_promo_usage_count$$
 
 CREATE TRIGGER trg_promo_usage_count
@@ -146,9 +134,7 @@ BEGIN
 END$$
 
 
--- =========================================
 -- TRIGGER 7: SET DRIVER STATUS TO OnTrip ON RIDE START
--- =========================================
 DROP TRIGGER IF EXISTS trg_driver_on_trip$$
 
 CREATE TRIGGER trg_driver_on_trip

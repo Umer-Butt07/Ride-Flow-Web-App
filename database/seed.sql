@@ -1,9 +1,5 @@
 USE rideflow;
 
--- =========================================
--- SAMPLE DATA SEED
--- =========================================
-
 -- Locations
 INSERT INTO Locations (Name, City, Latitude, Longitude) VALUES
 ('DHA Phase 1 Gate', 'Lahore', 31.4697, 74.4012),
@@ -14,7 +10,7 @@ INSERT INTO Locations (Name, City, Latitude, Longitude) VALUES
 ('Karachi Airport', 'Karachi', 24.9008, 67.1681),
 ('Clifton', 'Karachi', 24.8116, 67.0317);
 
--- Users (passwords are bcrypt hash of 'password123')
+-- Users
 INSERT INTO Users (FirstName, LastName, Email, Phone, PasswordHash, Role, AccountStatus, WalletBalance, RegDate) VALUES
 ('Super', 'Admin', 'admin@rideflow.com', '03001111111', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'Admin', 'Active', 0, '2026-01-01'),
 ('Ali', 'Raza', 'ali.rider@gmail.com', '03002222222', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'Rider', 'Active', 500, '2026-01-10'),

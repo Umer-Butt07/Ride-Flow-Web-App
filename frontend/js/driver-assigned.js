@@ -1,4 +1,8 @@
-const API = 'http://localhost:5000/api';
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? '${API_BASE_URL}'
+  : 'https://your-backend-api.onrender.com';
+
+const API = `${API_BASE_URL}/api`;
 const storage = sessionStorage;
 const token = storage.getItem('token') || localStorage.getItem('token');
 const user = JSON.parse(storage.getItem('user') || localStorage.getItem('user') || '{}');
@@ -100,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show driver profile picture if available
     const driverAvatarEl = document.querySelector('.driver-avatar');
     if (driverAvatarEl && ride.DriverProfilePicture) {
-      const src = ride.DriverProfilePicture.startsWith('http') ? ride.DriverProfilePicture : `http://localhost:5000${ride.DriverProfilePicture}`;
+      const src = ride.DriverProfilePicture.startsWith('http') ? ride.DriverProfilePicture : `${API_BASE_URL}${ride.DriverProfilePicture}`;
       driverAvatarEl.innerHTML = `<img src="${src}" alt="Driver" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
     }
 

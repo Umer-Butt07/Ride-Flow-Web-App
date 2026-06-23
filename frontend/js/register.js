@@ -1,3 +1,7 @@
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : 'https://your-backend-api.onrender.com';
+
 /* ============================================
    RideFlow — Registration Page JavaScript
    ============================================
@@ -514,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         body: formData
       });

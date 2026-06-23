@@ -1,4 +1,8 @@
-const API = 'http://localhost:5000/api';
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? '${API_BASE_URL}'
+  : 'https://your-backend-api.onrender.com';
+
+const API = `${API_BASE_URL}/api`;
 const storage = sessionStorage;
 const token = storage.getItem('token') || localStorage.getItem('token');
 const user = JSON.parse(storage.getItem('user') || localStorage.getItem('user') || '{}');
@@ -340,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.navbar-user-name, .sidebar-user-name').forEach((el) => { el.textContent = fullName; });
     document.querySelectorAll('.navbar-avatar').forEach((el) => {
       if (user.ProfilePicture) {
-        const src = user.ProfilePicture.startsWith('http') ? user.ProfilePicture : `http://localhost:5000${user.ProfilePicture}`;
+        const src = user.ProfilePicture.startsWith('http') ? user.ProfilePicture : `${API_BASE_URL}${user.ProfilePicture}`;
         el.innerHTML = `<img src="${src}" alt="Avatar" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
       } else {
         el.textContent = initials;

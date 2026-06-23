@@ -11,7 +11,7 @@ const storage = sessionStorage;
 const token = storage.getItem('token') || localStorage.getItem('token');
 const user  = JSON.parse(storage.getItem('user') || localStorage.getItem('user') || '{}');
 
-if (!token || user.role !== 'Driver') window.location.href = '../auth/login.html';
+if (!token || user.role !== 'Driver') window.location.href = '../../index.html';
 
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar        = document.getElementById('sidebar');
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setDriverChrome();
 
-  logoutLink.addEventListener('click', (e) => { e.preventDefault(); storage.clear(); window.location.href = '../auth/login.html'; });
+  logoutLink.addEventListener('click', (e) => { e.preventDefault(); storage.clear(); window.location.href = '../../index.html'; });
 
   // ── Load ride history from backend ──
   async function loadHistory() {

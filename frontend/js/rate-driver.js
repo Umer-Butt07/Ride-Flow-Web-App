@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(storage.getItem('user') || localStorage.getItem('user') || '{}');
 
   if (!token || user.role !== 'Rider') {
-    window.location.href = '../auth/login.html';
+    window.location.href = '../../index.html';
     return;
   }
 

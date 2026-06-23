@@ -8,7 +8,7 @@ const token = storage.getItem('token') || localStorage.getItem('token');
 const user = JSON.parse(storage.getItem('user') || localStorage.getItem('user') || '{}');
 
 if (!token || user.role !== 'Driver') {
-  window.location.href = '../auth/login.html';
+  window.location.href = '../../index.html';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   logoutLink.addEventListener('click', (e) => {
     e.preventDefault();
     storage.clear();
-    window.location.href = '../auth/login.html';
+    window.location.href = '../../index.html';
   });
 
   endTripBtn.addEventListener('click', completeRide);

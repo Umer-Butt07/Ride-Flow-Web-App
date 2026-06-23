@@ -202,11 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Redirect to specific dashboard based on role
       setTimeout(() => {
         if (data.user.role === 'Rider') {
-          window.location.href = '../rider/rider-dashboard.html';
+          window.location.href = 'pages/rider/rider-dashboard.html';
         } else if (data.user.role === 'Driver') {
-          window.location.href = '../driver/driver-dashboard.html';
+          window.location.href = 'pages/driver/driver-dashboard.html';
         } else if (data.user.role === 'Admin') {
-          window.location.href = '../admin/admin-dashboard.html';
+          window.location.href = 'pages/admin/admin-dashboard.html';
         } else {
           alert('Unknown role: ' + data.user.role);
         }

@@ -14,7 +14,13 @@ const PORT = process.env.PORT || 5000;
 const path = require('path');
 
 // ─── Middleware ────────────────────────────────────────────────────
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://ride-flow-web-app-git-main-umer-butt.vercel.app',
+    'https://ride-flow-web-app.vercel.app'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -1,11 +1,7 @@
 /* ============================================
    RideFlow — Admin Dashboard JavaScript
    ============================================ */
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-
-  ? '${API_BASE_URL}'
-
-  : 'https://your-backend-api.onrender.com';
+const API_BASE_URL = CONFIG.API_BASE_URL;
 
 
 const API = `${API_BASE_URL}/api`;
